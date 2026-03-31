@@ -2,7 +2,8 @@
 
 html{
   /* height 동적 제어 */
-  height: 100dvh;
+  min-height: 100dvh;
+  min-width: 100dvw;
   background-color: oklch(96.3% 0.005 258);
 }
 
@@ -133,6 +134,8 @@ html{
 /* Icon style */
 
 .icon-l {
+  -webkit-user-select: none;
+  user-select: none;
   font-size: 28px;
   line-height: 100%;
   font-family: 'Material Symbols Rounded';
@@ -143,6 +146,8 @@ html{
 }
 
 .icon-m {
+  -webkit-user-select: none;
+  user-select: none;
   font-size: 24px;
   line-height: 100%;
   font-family: 'Material Symbols Rounded';
@@ -154,6 +159,8 @@ html{
 }
 
 .icon-s {
+  -webkit-user-select: none;
+  user-select: none;
   font-size: 20px;
   line-height: 100%;
   font-family: 'Material Symbols Rounded';
@@ -164,6 +171,8 @@ html{
 }
 
 .icon-xs {
+  -webkit-user-select: none;
+  user-select: none;
   font-size: 16px;
   line-height: 100%;
   font-family: 'Material Symbols Rounded';
@@ -174,6 +183,8 @@ html{
 }
 
 .icon-xs-fill {
+  -webkit-user-select: none;
+  user-select: none;
   font-size: 16px;
   line-height: 100%;
   font-family: 'Material Symbols Rounded';
