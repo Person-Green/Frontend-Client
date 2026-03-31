@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Banner from "../widgets/banner";
 import Header from "../widgets/header";
 import Layout from "../widgets/layout";
+import BottomNav from "../widgets/bottomNav";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
           {/* Pages */}
         </Route>
       </Routes>
+      <BottomNav />
     </>
   );
 }

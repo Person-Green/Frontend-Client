@@ -1,4 +1,11 @@
 @import "tailwindcss";
+
+html{
+  /* height 동적 제어 */
+  height: 100dvh;
+  background-color: oklch(96.3% 0.005 258);
+}
+
 * {
   font-family:
     "Pretendard Variable",
@@ -17,6 +24,7 @@
 @theme {
   --*: initial;
 
+  --spacing-0: 0rem;
   --spacing-6: 0.375rem;
   --spacing-8: 0.5rem;
   --spacing-12: 0.75rem;
