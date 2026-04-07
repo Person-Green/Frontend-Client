@@ -45,7 +45,7 @@ const OnboardingPage = () => {
       ),
       description:
         '좋아하는 식물들을 저장하고,\nSNS를 통해서 친구들에게 공유해보세요!',
-      button: '초록이 만나러가리',
+      button: '초록이 만나러가기',
       subTag: '처음으로 돌아가기',
     },
   ];
@@ -72,8 +72,8 @@ const OnboardingPage = () => {
   };
 
   return (
-    <main className={'h-fit p-20 '}>
-      <div className={'flex flex-col gap-24'} key={currentItem.id}>
+    <main className={'min-h-screen p-20 flex items-center justify-center'}>
+      <div className={'h-fit flex flex-col gap-24'} key={currentItem.id}>
         <div className={'flex flex-col items-center gap-20'}>
           <img src={currentItem.img} alt="식물사진" />
           <div className="flex flex-col items-center gap-12">
@@ -87,7 +87,7 @@ const OnboardingPage = () => {
             <span className={'text-text-30'}>/{itemList.length}</span>
           </div>
         </div>
-        <div className={'flex flex-col justify-center gap-6'}>
+        <div className={'py-24 flex flex-col justify-center gap-6'}>
           {/*  버튼 컴포넌트*/}
           <Button onClick={handleNext}>{currentItem.button}</Button>
           <button
