@@ -1,5 +1,6 @@
 import Button from '../shared/button.tsx';
 import AllPlant from '../assets/plants/allPlant.svg';
+import Google from '../assets/icon/google.svg';
 
 const Login = () => {
   const item = {
@@ -11,7 +12,12 @@ const Login = () => {
       </>
     ),
     description: '가든 스텝으로 공간에 초록을 더해보세요.',
-    button: '구글로 로그인하기',
+    button: (
+      <>
+        <img src={Google} alt="구글" />
+        구글로 로그인하기
+      </>
+    ),
     subTag: '로그인에 문제가 있나요?',
   };
   return (

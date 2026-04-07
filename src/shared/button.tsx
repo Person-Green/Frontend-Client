@@ -1,19 +1,22 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+interface ButtonProps {
+  onClick?: () => void;
+  icon: string | undefined;
+  children: React.ReactNode;
+}
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  children: ReactNode;
-};
-
-const Button = ({ children, type = 'button', ...props }: ButtonProps) => {
+const Button = ({ icon, children, onClick }: ButtonProps) => {
   return (
     <button
+      onClick={onClick}
       className={
-        'h-full p-16 bg-primary rounded-14 body-s text-text-on-primary'
+        'h-full p-16 flex justify-center gap-6 bg-primary rounded-14 text-text-on-primary'
       }
-      type={type}
-      {...props}
+      type="button"
     >
-      {children}
+      {icon && <span className={'icon-s'}>{icon}</span>}
+      <div className={'body-s flex justify-center gap-6 whitespace-nowrap'}>
+        {children}
+      </div>
     </button>
   );
 };

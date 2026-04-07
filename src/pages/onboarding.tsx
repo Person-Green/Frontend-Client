@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Plant1 from '../assets/plants/plant1.svg';
-import Plant2 from '../assets/plants/plant2.svg';
-import Plant3 from '../assets/plants/plant3.svg';
+import Plant1 from '../assets/plants/plant1.png';
+import Plant2 from '../assets/plants/plant2.png';
+import Plant3 from '../assets/plants/plant3.png';
 import Button from '../shared/button';
 
 type OnboardingPageProps = {
@@ -21,7 +21,7 @@ const OnboardingPage = ({ onComplete }: OnboardingPageProps) => {
       ),
       description:
         '몇가지 질문에 답해주시면,\n사용자님 공간에 알 맞는 식물을 추천해드립니다!',
-      button: '다음',
+      buttonDescription: '다음',
       subTag: '건너뛰기',
     },
     {
@@ -35,7 +35,7 @@ const OnboardingPage = ({ onComplete }: OnboardingPageProps) => {
       ),
       description:
         '어려운 식물 지식이 없어도,\n키워드에 맞는 환경을 알아서 분석해드려요.',
-      button: '다음',
+      buttonDescription: '다음',
       subTag: '건너뛰기',
     },
     {
@@ -49,7 +49,8 @@ const OnboardingPage = ({ onComplete }: OnboardingPageProps) => {
       ),
       description:
         '좋아하는 식물들을 저장하고,\nSNS를 통해서 친구들에게 공유해보세요!',
-      button: '초록이 만나러가기',
+      buttonSpan: 'psychiatry',
+      buttonDescription: '초록이 만나러가기',
       subTag: '처음으로 돌아가기',
     },
   ];
@@ -94,7 +95,9 @@ const OnboardingPage = ({ onComplete }: OnboardingPageProps) => {
         </div>
         <div className={'py-24 flex flex-col justify-center gap-6'}>
           {/*  버튼 컴포넌트*/}
-          <Button onClick={handleNext}>{currentItem.button}</Button>
+          <Button icon={currentItem.buttonSpan} onClick={handleNext}>
+            {currentItem.buttonDescription}
+          </Button>
           <button
             className={'label-s text-text-30 underline'}
             onClick={handleSubAction}
