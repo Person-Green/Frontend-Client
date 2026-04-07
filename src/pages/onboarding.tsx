@@ -9,7 +9,6 @@ type OnboardingPageProps = {
 };
 
 const OnboardingPage = ({ onComplete }: OnboardingPageProps) => {
-
   const itemList = [
     {
       id: 1,
@@ -73,8 +72,8 @@ const OnboardingPage = ({ onComplete }: OnboardingPageProps) => {
       setCurrentIndex(0);
       return;
     }
-
-    setCurrentIndex(itemList.length - 1);
+    onComplete();
+    return;
   };
 
   return (
