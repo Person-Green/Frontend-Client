@@ -1,25 +1,16 @@
-import { Route, Routes } from 'react-router-dom';
-import Banner from '../widgets/banner';
-import Header from '../widgets/header';
-import Layout from '../widgets/layout';
-import BottomNav from '../widgets/bottomNav';
+import { useState } from 'react';
 import Onboarding from '../pages/onboarding.tsx';
-import NotFound from '../pages/notfound.tsx';
+import Login from '../pages/login.tsx';
 
 function App() {
-  if (1) {
-    return <Onboarding />;
+  const [currentPage, setCurrentPage] = useState<'onboarding' | 'login'>(
+    'onboarding',
+  );
+
+  if (currentPage === 'onboarding') {
+    return <Onboarding onComplete={() => setCurrentPage('login')} />;
   }
-  // return (
-  //   <>
-  //     <Header />
-  //     <Banner />
-  //     <Routes>
-  //       <Route element={<Layout />}>{/* Pages */}</Route>
-  //       <Route path="*" element={<NotFound />} />
-  //     </Routes>
-  //     <BottomNav />
-  //   </>
-  // );
+
+  return <Login />;
 }
 export default App;

@@ -4,7 +4,12 @@ import Plant2 from '../assets/plants/plant2.svg';
 import Plant3 from '../assets/plants/plant3.svg';
 import Button from '../shared/button';
 
-const OnboardingPage = () => {
+type OnboardingPageProps = {
+  onComplete: () => void;
+};
+
+const OnboardingPage = ({ onComplete }: OnboardingPageProps) => {
+
   const itemList = [
     {
       id: 1,
@@ -56,6 +61,7 @@ const OnboardingPage = () => {
 
   const handleNext = () => {
     if (isLastPage) {
+      onComplete();
       return;
     }
 
