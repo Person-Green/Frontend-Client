@@ -9,8 +9,12 @@ const OnboardingPage = () => {
     {
       id: 1,
       img: Plant1,
-      title:
-        '오늘 내 공간에 ${<span class="text-color-primary">초록</span>}을 들여볼까요?',
+      title: (
+        <>
+          오늘, 내 공간에 <span className="text-text-highlight">초록</span>을
+          들여볼까요?
+        </>
+      ),
       description:
         '몇가지 질문에 답해주시면,\n사용자님 공간에 알 맞는 식물을 추천해드립니다!',
       button: '다음',
@@ -19,8 +23,12 @@ const OnboardingPage = () => {
     {
       id: 2,
       img: Plant2,
-      title:
-        '${<span class="text-color-primary">간단</span>}하고, ${<span class="text-color-primary">쉬운</span>} 질문으로 준비했어요.',
+      title: (
+        <>
+          <span className="text-text-highlight">간단</span>하고,{' '}
+          <span className="text-text-highlight">쉬운</span> 질문으로 준비했어요.
+        </>
+      ),
       description:
         '어려운 식물 지식이 없어도,\n키워드에 맞는 환경을 알아서 분석해드려요.',
       button: '다음',
@@ -29,11 +37,15 @@ const OnboardingPage = () => {
     {
       id: 3,
       img: Plant3,
-      title:
-        '친구들과 식물을 ${<span class="text-color-primary">공유</span>}해보세요!',
+      title: (
+        <>
+          친구들과 식물을 <span className="text-text-highlight">공유</span>
+          해보세요!
+        </>
+      ),
       description:
         '좋아하는 식물들을 저장하고,\nSNS를 통해서 친구들에게 공유해보세요!',
-      button: '초록이 만나러가기',
+      button: '초록이 만나러가리',
       subTag: '처음으로 돌아가기',
     },
   ];
@@ -62,15 +74,17 @@ const OnboardingPage = () => {
   return (
     <main className={'h-fit p-20 '}>
       <div className={'flex flex-col gap-24'} key={currentItem.id}>
-        <div>
+        <div className={'flex flex-col items-center gap-20'}>
           <img src={currentItem.img} alt="식물사진" />
-          <div>
-            <div>{currentItem.title}</div>
-            <div className="whitespace-pre-line">{currentItem.description}</div>
+          <div className="flex flex-col items-center gap-12">
+            <div className={'title-m text-text-10'}>{currentItem.title}</div>
+            <div className="whitespace-pre-line body-s text-text-20 text-center">
+              {currentItem.description}
+            </div>
           </div>
-          <div>
+          <div className={'label-m text-text-20'}>
             {currentItem.id}
-            <span>/{itemList.length}</span>
+            <span className={'text-text-30'}>/{itemList.length}</span>
           </div>
         </div>
         <div className={'flex flex-col justify-center gap-6'}>
