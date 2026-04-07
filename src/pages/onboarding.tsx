@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Plant1 from '../assets/plants/plant1.svg';
 import Plant2 from '../assets/plants/plant2.svg';
 import Plant3 from '../assets/plants/plant3.svg';
+import Button from '../shared/button';
 
 const OnboardingPage = () => {
   const itemList = [
@@ -59,8 +60,8 @@ const OnboardingPage = () => {
   };
 
   return (
-    <main className={'h-fit'}>
-      <div key={currentItem.id}>
+    <main className={'h-fit p-20 '}>
+      <div className={'flex flex-col gap-24'} key={currentItem.id}>
         <div>
           <img src={currentItem.img} alt="식물사진" />
           <div>
@@ -72,12 +73,13 @@ const OnboardingPage = () => {
             <span>/{itemList.length}</span>
           </div>
         </div>
-        <div>
+        <div className={'flex flex-col justify-center gap-6'}>
           {/*  버튼 컴포넌트*/}
-          <button type="button" onClick={handleNext}>
-            {currentItem.button}
-          </button>
-          <button type="button" onClick={handleSubAction}>
+          <Button onClick={handleNext}>{currentItem.button}</Button>
+          <button
+            className={'label-s text-text-30 underline'}
+            onClick={handleSubAction}
+          >
             {currentItem.subTag}
           </button>
         </div>
