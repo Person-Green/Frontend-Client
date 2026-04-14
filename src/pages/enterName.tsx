@@ -15,12 +15,7 @@ const EnterName = () => {
       </>
     ),
     description: '가든 스텝으로 공간에 초록을 더해보세요.',
-    button: (
-      <>
-        <img src={Google} alt="구글" />
-        시작하기{/*flag_2 구글로 로그인하기*/}
-      </>
-    ),
+    button: '시작하기',
     subTag: '다른 계정으로 로그인',
   };
   return (
@@ -34,7 +29,7 @@ const EnterName = () => {
               placeholder="이름을 입력해주세요!"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className={`w-full body-s bg-transparent placeholder:text-text-30 ${hasValue ? 'text-text-20' : 'text-text-30'}`}
+              className={`w-full body-s bg-transparent outline-none placeholder:text-text-30 ${hasValue ? 'text-text-20' : 'text-text-30'}`}
             />
             <span
               className={`icon-s ${hasValue ? 'text-text-20' : 'text-text-30'}`}
@@ -49,9 +44,9 @@ const EnterName = () => {
           </div>
         </div>
         {/*  버튼 컴포넌트*/}
-        {/*<div className={hasValue ? 'w-full' : 'w-full opacity-50'}>*/}
-        <Button>{item.button}</Button>
-        {/*</div>*/}
+        <Button icon="flag_2" dimmed={!hasValue}>
+          {item.button}
+        </Button>
         <button
           type="button"
           disabled
