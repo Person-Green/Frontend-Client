@@ -2,7 +2,11 @@ import Button from '../shared/button.tsx';
 import AllPlant from '../assets/plants/allPlant.svg';
 import Google from '../assets/icon/google.svg';
 
-const Login = () => {
+interface LoginProps {
+  onGoogleLogin?: () => void;
+}
+
+const Login = ({ onGoogleLogin }: LoginProps) => {
   const item = {
     img: AllPlant,
     title: (
@@ -34,7 +38,7 @@ const Login = () => {
         </div>
         <div className={'py-24 flex flex-col justify-center gap-6'}>
           {/*  버튼 컴포넌트*/}
-          <Button disabled>{item.button}</Button>
+          <Button onClick={onGoogleLogin}>{item.button}</Button>
           <button
             type="button"
             disabled
