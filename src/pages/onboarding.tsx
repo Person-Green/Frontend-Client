@@ -78,33 +78,33 @@ const OnboardingPage = ({ onComplete }: OnboardingPageProps) => {
   };
 
   return (
-    <main className={'min-h-screen p-20 flex items-center justify-center'}>
-      <div className={'h-fit flex flex-col gap-24'} key={currentItem.id}>
-        <div className={'flex flex-col items-center gap-20'}>
-          <img src={currentItem.img} alt="식물사진" />
-          <div className="flex flex-col items-center gap-12">
-            <div className={'title-m text-text-10'}>{currentItem.title}</div>
-            <div className="whitespace-pre-line body-s text-text-20 text-center">
-              {currentItem.description}
-            </div>
-          </div>
-          <div className={'label-m text-text-20'}>
-            {currentItem.id}
-            <span className={'text-text-30'}>/{itemList.length}</span>
+    <main className={'flex flex-col min-h-screen p-20'}>
+      <div
+        className={'flex-1 justify-center flex flex-col items-center gap-20'}
+      >
+        <img src={currentItem.img} alt="식물사진" />
+        <div className="flex flex-col items-center gap-12">
+          <div className={'title-m text-text-10'}>{currentItem.title}</div>
+          <div className="whitespace-pre-line body-s text-text-20 text-center">
+            {currentItem.description}
           </div>
         </div>
-        <div className={'py-24 flex flex-col justify-center gap-6'}>
-          {/*  버튼 컴포넌트*/}
-          <Button icon={currentItem.buttonSpan} onClick={handleNext}>
-            {currentItem.buttonDescription}
-          </Button>
-          <button
-            className={'label-s text-text-30 underline'}
-            onClick={handleSubAction}
-          >
-            {currentItem.subTag}
-          </button>
+        <div className={'label-m text-text-20'}>
+          {currentItem.id}
+          <span className={'text-text-30'}>/{itemList.length}</span>
         </div>
+      </div>
+      <div className={'h-fit py-24 flex flex-col justify-center gap-6'}>
+        {/*  버튼 컴포넌트*/}
+        <Button icon={currentItem.buttonSpan} onClick={handleNext}>
+          {currentItem.buttonDescription}
+        </Button>
+        <button
+          className={'label-s text-text-30 underline'}
+          onClick={handleSubAction}
+        >
+          {currentItem.subTag}
+        </button>
       </div>
     </main>
   );
