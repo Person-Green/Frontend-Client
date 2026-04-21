@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import Button from '../shared/button.tsx';
-import Google from '../assets/icon/google.svg';
 
 // TODO: 임시 페이지 - 실제 EnterName UI로 교체 필요
 const EnterName = () => {
   const [name, setName] = useState('');
+  const [error, setError] = useState(true);
   const hasValue = name.length > 0;
-
   const item = {
     title: (
       <>
@@ -17,6 +16,16 @@ const EnterName = () => {
     description: '가든 스텝으로 공간에 초록을 더해보세요.',
     button: '시작하기',
     subTag: '다른 계정으로 로그인',
+  };
+  const onClickHandle = () => {
+    const trimmed = name.trim();
+    const isTooShort = trimmed.length >= 5;
+    const hasInvalidChar = !/^[a-zA-Z0-9가-힣]+$/.test(trimmed);
+    const hasSpace = /\s/.test(name);
+
+    let isError = isTooShort || hasInvalidChar || hasSpace;
+    isError = !isError;
+    setError(isError);
   };
   return (
     <main className={'min-h-screen p-20 flex items-center justify-center'}>
@@ -37,14 +46,12 @@ const EnterName = () => {
               ar_on_you
             </span>
           </div>
-          <div
-            className={`label-s ${hasValue ? 'text-text-30' : 'text-warning'}`}
-          >
+          <div className={`label-s ${error ? 'text-text-30' : 'text-warning'}`}>
             ※ 필수 입력란 입니다. 5자 이내, 특수문자, 공백 사용불가.
           </div>
         </div>
         {/*  버튼 컴포넌트*/}
-        <Button icon="flag_2" dimmed={!hasValue}>
+        <Button icon="flag_2" dimmed={!hasValue} onClick={onClickHandle}>
           {item.button}
         </Button>
         <button
