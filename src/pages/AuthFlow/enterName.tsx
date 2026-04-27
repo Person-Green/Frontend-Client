@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '../shared/button.tsx';
+import Button from '../../shared/button.tsx';
 
 // TODO: 임시 페이지 - 실제 EnterName UI로 교체 필요
 const EnterName = () => {

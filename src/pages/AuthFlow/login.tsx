@@ -1,6 +1,6 @@
-import Button from '../shared/button.tsx';
-import AllPlant from '../assets/plants/allPlant.svg';
-import Google from '../assets/icon/google.svg';
+import Button from '../../shared/button.tsx';
+import AllPlant from '../../assets/plants/allPlant.svg';
+import Google from '../../assets/icon/google.svg';
 
 interface LoginProps {
   onGoogleLogin?: () => void;

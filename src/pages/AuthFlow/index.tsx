@@ -1,6 +1,6 @@
-import EnterName from '../../pages/enterName.tsx';
-import Login from '../../pages/login.tsx';
-import Onboarding from '../../pages/onboarding.tsx';
+import EnterName from './enterName.tsx';
+import Login from './login.tsx';
+import Onboarding from './onboarding.tsx';
 import { useState } from 'react';
 
 const AuthFlow = () => {
