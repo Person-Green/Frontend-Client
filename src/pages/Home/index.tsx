@@ -1,6 +1,7 @@
 import PlantItem from '../../shared/plantItem.tsx';
 import Button from '../../shared/button.tsx';
 import EatenCharacter from '../../assets/character/eaten.svg';
+import Title from '../../shared/title.tsx';
 
 const Home = () => {
   const plantList = [
@@ -46,14 +47,10 @@ const Home = () => {
       {/*인기식물*/}
       <article className="flex flex-col gap-12 pb-20">
         <div className="flex justify-between items-center">
-          <div className="flex justify-center items-center gap-6">
-            <span className="icon-m text-text-highlight">nest_eco_leaf</span>
-            <span className="title-m">인기식물</span>
-          </div>
+          <Title icon="nest_eco_leaf" title="인기식물" textSize="title-m" />
           <span className="py-6 px-12 rounded-max label-s bg-surface-20 text-text-20">
             전체보기
           </span>
-          메
         </div>
         <ul className="flex gap-16 overflow-x-scroll no-scrollbar">
           {plantList.map((item, i) => (
@@ -63,10 +60,7 @@ const Home = () => {
       </article>
       {/*식물 팁*/}
       <section className="flex flex-col gap-12">
-        <div className="flex items-center gap-6">
-          <span className="icon-m text-text-highlight">potted_plant</span>
-          <span className="title-s">식물 팁</span>
-        </div>
+        <Title icon="potted_plant" title="식물 팁" textSize="title-s" />
         <div className="flex flex-col p-16 bg-surface-20 rounded-8">
           <span className="label-m text-text-20">
             겨울철에는 물주기 간격을 늘려주세요!
