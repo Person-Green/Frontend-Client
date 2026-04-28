@@ -1,5 +1,4 @@
 import PlantItem from '../../shared/plantItem.tsx';
-import Button from '../../shared/button.tsx';
 import EatenCharacter from '../../assets/character/eaten.svg';
 import Title from '../../shared/title.tsx';
 
@@ -31,7 +30,7 @@ const Home = () => {
             <img src={EatenCharacter} alt="캐릭터" className="w-[41.36px]" />
           </div>
           <div className="flex justify-between items-center px-8 text-text-20">
-            <span className="label-s">약 1소요</span>
+            <span className="label-s">약 1분 소요</span>
             <span className="label-s">5가지 질문</span>
           </div>
         </figure>
@@ -45,16 +44,20 @@ const Home = () => {
         </div>
       </article>
       {/*인기식물*/}
-      <article className="flex flex-col gap-12 pb-20">
+      <article className="flex flex-col gap-12 pb-20 ">
         <div className="flex justify-between items-center">
           <Title icon="nest_eco_leaf" title="인기식물" textSize="title-m" />
           <span className="py-6 px-12 rounded-max label-s bg-surface-20 text-text-20">
             전체보기
           </span>
         </div>
-        <ul className="flex gap-16 overflow-x-scroll no-scrollbar">
+        <ul className="flex gap-16 overflow-x-scroll no-scrollbar -mx-20 px-20">
           {plantList.map((item, i) => (
-            <PlantItem i={i} name={item.name} description={item.description} />
+            <PlantItem
+              key={i}
+              name={item.name}
+              description={item.description}
+            />
           ))}
         </ul>
       </article>
