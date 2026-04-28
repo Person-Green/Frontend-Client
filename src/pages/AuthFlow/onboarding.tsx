@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Plant1 from '../assets/plants/plant1.png';
-import Plant2 from '../assets/plants/plant2.png';
-import Plant3 from '../assets/plants/plant3.png';
-import Button from '../shared/button';
+import Plant1 from '../../assets/plants/plant1.png';
+import Plant2 from '../../assets/plants/plant2.png';
+import Plant3 from '../../assets/plants/plant3.png';
+import Button from '../../shared/button.tsx';
 
 type OnboardingPageProps = {
   onComplete: () => void;
