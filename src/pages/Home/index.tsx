@@ -48,9 +48,8 @@ const Home = () => {
           </span>
         </div>
         <ul className="flex gap-16 overflow-x-scroll no-scrollbar -mx-20 px-20">
-          {plantList.map((item, i) => (
+          {plantList.map((item) => (
             <PlantItem
-              key={i}
               name={item.plantKoreanName}
               description={`${item.size}, ${item.manageDifficulty}`}
             />
