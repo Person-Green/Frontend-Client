@@ -1,22 +1,18 @@
+import { useEffect, useState } from 'react';
 import PlantItem from '../../shared/plantItem.tsx';
 import EatenCharacter from '../../assets/character/eaten.svg';
 import Title from '../../shared/title.tsx';
+import { getPlants } from '../../shared/api';
+import type { PlantCatalogItemResponse } from '../../shared/api';
 
 const Home = () => {
-  const plantList = [
-    {
-      name: '스쿠티',
-      description: '중형,관리쉬움',
-    },
-    {
-      name: '몬스테라',
-      description: '대형,관리보통',
-    },
-    {
-      name: '스킨답서스',
-      description: '소형~중형, 초보추천',
-    },
-  ];
+  const [plantList, setPlantList] = useState<PlantCatalogItemResponse[]>([]);
+
+  useEffect(() => {
+    getPlants({ sort: 'LIKE_DESC', size: 10 })
+      .then((res) => setPlantList(res.plants))
+      .catch((e) => console.error('인기식물 로딩 실패', e));
+  }, []);
   return (
     <main className="flex flex-col gap-24 p-20">
       {/*맞춤 식물 큐레이션*/}
@@ -52,11 +48,11 @@ const Home = () => {
           </span>
         </div>
         <ul className="flex gap-16 overflow-x-scroll no-scrollbar -mx-20 px-20">
-          {plantList.map((item, i) => (
+          {plantList.map((item) => (
             <PlantItem
-              key={i}
-              name={item.name}
-              description={item.description}
+              key={item.plantId}
+              name={item.plantKoreanName}
+              description={`${item.size}, ${item.manageDifficulty}`}
             />
           ))}
         </ul>
