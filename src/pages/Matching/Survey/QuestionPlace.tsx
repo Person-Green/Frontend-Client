@@ -1,4 +1,4 @@
-import SurveyHeader from './components/SurveyHeader.tsx';
+import DetailHeader from '../../../widgets/detailHeader.tsx';
 import ProgressBar from './components/ProgressBar.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import NavButtons from './components/NavButtons.tsx';
@@ -27,7 +27,7 @@ const QuestionPlace = ({
 
   return (
     <main className="min-h-screen flex flex-col p-20">
-      <SurveyHeader title="장소 선택" onBack={onPrev} />
+      <DetailHeader>장소선택</DetailHeader>
       <ProgressBar current={step} total={total} />
 
       <MatchingTitle icon='place_item' textSize='title-l' >

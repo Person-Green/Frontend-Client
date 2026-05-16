@@ -1,4 +1,4 @@
-import SurveyHeader from './components/SurveyHeader.tsx';
+import DetailHeader from '../../../widgets/detailHeader.tsx';
 import ProgressBar from './components/ProgressBar.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import NavButtons from './components/NavButtons.tsx';
@@ -28,7 +28,7 @@ const QuestionPet = ({
 
   return (
     <main className="min-h-screen flex flex-col p-20">
-      <SurveyHeader title="반려동물 & 경험" onBack={onPrev} />
+      <DetailHeader>반려동물 & 경험</DetailHeader>
       <ProgressBar current={step} total={total} />
       <MatchingTitle icon='pets' textSize='title-l' >
         함께 살고있는

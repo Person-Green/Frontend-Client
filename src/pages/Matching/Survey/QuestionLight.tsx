@@ -1,4 +1,4 @@
-import SurveyHeader from './components/SurveyHeader.tsx';
+import DetailHeader from '../../../widgets/detailHeader.tsx';
 import ProgressBar from './components/ProgressBar.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import NavButtons from './components/NavButtons.tsx';
@@ -23,7 +23,7 @@ const QuestionLight = ({
 
   return (
     <main className="min-h-screen flex flex-col p-20">
-      <SurveyHeader title="채광" onBack={onPrev} />
+      <DetailHeader>채광</DetailHeader>
       <ProgressBar current={step} total={total} />
       <MatchingTitle icon='sunny' textSize='title-l' >
         햇빛이 얼마나 들어오는
