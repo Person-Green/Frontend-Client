@@ -1,4 +1,4 @@
-
+import DetailHeader from '../../../widgets/detailHeader.tsx';
 import ProgressBar from './components/ProgressBar.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import NavButtons from './components/NavButtons.tsx';
