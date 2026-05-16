@@ -13,7 +13,7 @@ const AuthFlow = () => {
   }
 
   if (currentPage === 'login') {
-    return <Login onGoogleLogin={() => setCurrentPage('enterName')} />;
+    return <Login />;
   }
 
   return <EnterName />;
