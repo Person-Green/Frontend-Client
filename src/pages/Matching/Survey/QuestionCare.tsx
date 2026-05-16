@@ -1,4 +1,4 @@
-import SurveyHeader from './components/SurveyHeader.tsx';
+
 import ProgressBar from './components/ProgressBar.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import NavButtons from './components/NavButtons.tsx';
@@ -23,7 +23,7 @@ const QuestionCare = ({
 
   return (
     <main className="min-h-screen flex flex-col p-20">
-      <SurveyHeader title="관리" onBack={onPrev} />
+      <DetailHeader>관리</DetailHeader>
       <ProgressBar current={step} total={total} />
       <MatchingTitle icon='volunteer_activism' textSize='title-l' >
         식물을 어떻게
