@@ -1,12 +1,24 @@
 import Button from '../../shared/button.tsx';
 import AllPlant from '../../assets/plants/allPlant.svg';
 import Google from '../../assets/icon/google.svg';
+import { getGoogleAuthorizationUrl } from '../../shared/api';
 
 interface LoginProps {
   onGoogleLogin?: () => void;
 }
 
+const REDIRECT_URI = `${window.location.origin}/auth/google/callback`;
+
 const Login = ({ onGoogleLogin }: LoginProps) => {
+  const handleGoogleLogin = async () => {
+    try {
+      const { authorizationUrl } = await getGoogleAuthorizationUrl(REDIRECT_URI);
+      window.location.href = authorizationUrl;
+    } catch (e) {
+      console.error('Google 로그인 URL 요청 실패', e);
+    }
+  };
+
   const item = {
     img: AllPlant,
     title: (
@@ -24,6 +36,7 @@ const Login = ({ onGoogleLogin }: LoginProps) => {
     ),
     subTag: '로그인에 문제가 있나요?',
   };
+
   return (
     <main className="flex flex-col justify-center min-h-screen p-20 gap-24">
       <div className="h-fit justify-center flex flex-col items-center gap-16 py-24">
@@ -36,8 +49,7 @@ const Login = ({ onGoogleLogin }: LoginProps) => {
         </div>
       </div>
       <div className={'h-fit py-24 flex flex-col justify-center gap-6'}>
-        {/*  버튼 컴포넌트*/}
-        <Button onClick={onGoogleLogin}>{item.button}</Button>
+        <Button onClick={onGoogleLogin ?? handleGoogleLogin}>{item.button}</Button>
         <button
           type="button"
           disabled
