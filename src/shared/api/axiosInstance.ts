@@ -44,7 +44,11 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes('/auth/token/refresh')
+    ) {
       if (isRefreshing) {
         // 이미 갱신 중이면 큐에 추가
         return new Promise((resolve, reject) => {
@@ -72,9 +76,9 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
+        window.location.href = '/auth';
         processQueue(refreshError, null);
         localStorage.removeItem('accessToken');
-        window.location.href = '/auth';
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

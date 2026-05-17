@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../../shared/button.tsx';
+import Button from '../../shared/ui/button.tsx';
 import Swing from '../../assets/character/swing.svg';
 
 const Matching = () => {
