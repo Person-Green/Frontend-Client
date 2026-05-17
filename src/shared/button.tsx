@@ -1,15 +1,16 @@
 interface ButtonProps {
   onClick?: () => void;
+  bg? : string | undefined;
   icon?: string | undefined;
   children: React.ReactNode;
   dimmed?: boolean;
 }
 
-const Button = ({ icon, children, onClick, dimmed }: ButtonProps) => {
+const Button = ({ icon, children, onClick, dimmed, bg }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className={`h-full w-full p-16 flex justify-center gap-6 bg-primary rounded-14 text-text-on-primary ${dimmed ? ' opacity-50' : ''}`}
+      className={`h-full w-full p-16 flex justify-center gap-6 ${bg === 'gray' ? 'bg-surface-20' : 'bg-primary'} rounded-14 text-text-on-primary ${dimmed ? ' opacity-50' : ''}`}
       type="button"
     >
       {icon && <span className={'icon-s'}>{icon}</span>}
