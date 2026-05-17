@@ -1,4 +1,3 @@
-import DetailHeader from '../../../widgets/detailHeader.tsx';
 import ProgressBar from './components/ProgressBar.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import NavButtons from './components/NavButtons.tsx';
@@ -27,7 +26,6 @@ const QuestionPlace = ({
 
   return (
     <main className="min-h-screen flex flex-col p-20">
-      <DetailHeader>장소선택</DetailHeader>
       <ProgressBar current={step} total={total} />
 
       <MatchingTitle icon='place_item' textSize='title-l' >
@@ -42,10 +40,10 @@ const QuestionPlace = ({
             key={opt.value}
             type="button"
             onClick={() => setAnswers({ ...answers, place: opt.value })}
-            className={`flex items-center gap-6 px-16 py-10 rounded-full label-s ${
+            className={`w-fit flex items-center gap-6 px-16 py-10 rounded-full body-m ${
               selected === opt.value
                 ? 'bg-primary text-text-on-primary'
-                : 'bg-gray-200 text-text-20'
+                : 'bg-surface-20 text-text-20'
             }`}
           >
             <span>{opt.icon}</span>

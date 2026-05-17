@@ -6,6 +6,7 @@ import QuestionAir from './QuestionAir.tsx';
 import QuestionTempHumidity from './QuestionTempHumidity.tsx';
 import QuestionCare from './QuestionCare.tsx';
 import QuestionPet from './QuestionPet.tsx';
+import DetailHeader from '../../../widgets/detailHeader.tsx';
 import type { SurveyAnswers } from './types.ts';
 
 const QUESTIONS = [
@@ -16,6 +17,8 @@ const QUESTIONS = [
   QuestionCare,
   QuestionPet,
 ];
+
+const HEADER_TITLES = ['장소선택', '채광', '환기 & 공기', '온도 & 습도', '관리', '반려동물 & 경험'];
 
 const MatchingSurvey = () => {
   const navigate = useNavigate();
@@ -45,14 +48,17 @@ const MatchingSurvey = () => {
   const CurrentQuestion = QUESTIONS[step];
 
   return (
-    <CurrentQuestion
-      step={step + 1}
-      total={total}
-      answers={answers}
-      setAnswers={setAnswers}
-      onNext={handleNext}
-      onPrev={handlePrev}
-    />
+    <>
+      <DetailHeader>{HEADER_TITLES[step]}</DetailHeader>
+      <CurrentQuestion
+        step={step + 1}
+        total={total}
+        answers={answers}
+        setAnswers={setAnswers}
+        onNext={handleNext}
+        onPrev={handlePrev}
+      />
+    </>
   );
 };
 
