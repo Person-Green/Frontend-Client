@@ -2,10 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginWithGoogle } from '../../shared/api';
 
-/**
- * Google OAuth 콜백 페이지
- * /auth/callback?code=...&state=...
- */
+
 const AuthCallback = () => {
   const navigate = useNavigate();
 
