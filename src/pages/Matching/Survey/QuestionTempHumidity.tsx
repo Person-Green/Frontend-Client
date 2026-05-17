@@ -2,7 +2,6 @@ import ProgressBar from './components/ProgressBar.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import NavButtons from './components/NavButtons.tsx';
 import type { QuestionProps } from './types.ts';
-import DetailHeader from '../../../widgets/detailHeader.tsx';
 
 const TEMP_OPTIONS = [
   { value: 'cool', label: '서늘함', sub: '18~20°C' },
@@ -50,7 +49,6 @@ const QuestionTempHumidity = ({
 
   return (
     <main className="min-h-screen flex flex-col p-20">
-      <DetailHeader>온도 & 습도</DetailHeader>  
       <ProgressBar current={step} total={total} />
       <MatchingTitle icon='dew_point' textSize='title-l' >
         장소의 온도와 습도는

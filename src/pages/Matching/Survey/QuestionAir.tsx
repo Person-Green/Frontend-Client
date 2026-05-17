@@ -1,4 +1,3 @@
-import DetailHeader from '../../../widgets/detailHeader.tsx';
 import ProgressBar from './components/ProgressBar.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import NavButtons from './components/NavButtons.tsx';
@@ -23,7 +22,6 @@ const QuestionAir = ({
 
   return (
     <main className="min-h-screen flex flex-col p-20">
-      <DetailHeader>환기 & 공기</DetailHeader>
       <ProgressBar current={step} total={total} />
       <MatchingTitle icon='air' textSize='title-l' >
         장소의 공기 순환이나
