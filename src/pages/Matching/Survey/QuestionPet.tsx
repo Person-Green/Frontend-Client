@@ -13,6 +13,11 @@ const EXPERIENCE_OPTIONS = [
 ];
 
 const QuestionPet = ({ answers, setAnswers }: QuestionProps) => {
+  const activeIndex = Math.max(
+    0,
+    EXPERIENCE_OPTIONS.findIndex((o) => o.value === answers.experience),
+  );
+
   return (
     <>
       <div className="flex flex-col gap-8 py-16">
@@ -29,7 +34,13 @@ const QuestionPet = ({ answers, setAnswers }: QuestionProps) => {
 
       <div className="flex flex-col gap-6">
         <span className="body-s text-text-30">식물을 키워 보신적이 있나요?</span>
-        <div className="grid grid-cols-3 bg-gray-200 rounded-14 bg-surface-20 p-6">
+        <div className="relative grid grid-cols-3 bg-gray-200 rounded-14 bg-surface-20 p-6">
+          <div className="pointer-events-none absolute inset-6">
+            <div
+              className="h-full w-1/3 rounded-8 bg-surface-10 transition-transform duration-300 ease-in-out"
+              style={{ transform: `translateX(${activeIndex * 100}%)` }}
+            />
+          </div>
           {EXPERIENCE_OPTIONS.map((opt) => {
             const isActive = answers.experience === opt.value;
             return (
@@ -37,8 +48,8 @@ const QuestionPet = ({ answers, setAnswers }: QuestionProps) => {
                 key={opt.value}
                 type="button"
                 onClick={() => setAnswers({ ...answers, experience: opt.value })}
-                className={`p-12 rounded-12 body-s rounded-14 ${
-                  isActive ? 'bg-surface-10 text-text-10' : 'text-text-30'
+                className={`relative z-10 p-12 rounded-8 body-s transition-colors duration-300 ease-in-out ${
+                  isActive ? 'text-text-10' : 'text-text-30'
                 }`}
               >
                 {opt.label}
