@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import Button from '../../../shared/button.tsx';
+import Button from '../../../shared/ui/button.tsx';
 import type { SurveyAnswers } from '../Survey/types.ts';
 
 const MatchingResult = () => {

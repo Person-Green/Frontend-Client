@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../../shared/button.tsx';
-import Swing from '../../assets/character/swing.svg';
+import Button from '../../shared/ui/button.tsx';
+import Blink from '../../assets/character/blink.svg';
 
 const Matching = () => {
   const navigate = useNavigate();
   return (
-    <main className="min-h-screen flex flex-col p-20 pb-[96px]">
-      <article className="flex-1 flex flex-col justify-center items-center gap-24">
-        <object type="image/svg+xml" data={Swing} width={161} height={200} />
+    <main className="h-[calc(100vh-60px)] flex flex-col p-20 pb-[96px]">
+      <article className="h-full flex flex-col justify-center items-center gap-24">
+        <object type="image/svg+xml" data={Blink} width={161} height={200} />
         <div className="flex flex-col gap-8 py-12">
           <span className="title-l">이제 같이 식물을 찾아볼까요?</span>
           <span className="body-s text-center">
