@@ -35,7 +35,7 @@ const Home = () => {
           </div>
         </figure>
         <div className="flex gap-8">
-          <button className="w-full px-16 py-12 rounded-max bg-primary text-text-on-primary">
+          <button className=" body-s !font-[500] w-full px-16 py-12 rounded-max bg-primary text-text-on-primary">
             매칭받기
           </button>
           <button className="w-full px-16 py-12 rounded-max bg-surface-30 text-text-20">
@@ -65,11 +65,8 @@ const Home = () => {
       <section className="flex flex-col gap-12">
         <Title icon="potted_plant" title="식물 팁" textSize="title-s" />
         <div className="flex flex-col p-16 bg-surface-20 rounded-8">
-          <span className="label-m text-text-20">
-            겨울철에는 물주기 간격을 늘려주세요!
-          </span>
-          <span className="label-m text-text-20">
-            대부분의 식물이 겨울에는 성장이 느려집니다.
+          <span className="label-m !font-[500] text-text-20 whitespace-pre-line">
+            {`겨울철에는 물주기 간격을 늘려주세요!\n대부분의 식물이 겨울에는 성장이 느려집니다.`}
           </span>
         </div>
       </section>
