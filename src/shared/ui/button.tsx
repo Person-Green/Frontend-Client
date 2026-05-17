@@ -1,5 +1,6 @@
 interface ButtonProps {
   onClick?: () => void;
+  bg? : string | undefined;
   icon?: string | undefined;
   children: React.ReactNode;
   dimmed?: boolean;
