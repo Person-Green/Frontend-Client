@@ -10,7 +10,7 @@ const OptionCard = ({ icon, label, selected, onClick }: OptionCardProps) => {
     <button
       type="button"
       onClick={onClick}
-      className={`w-full flex items-center gap-12 p-16 rounded-14 border ${
+      className={`w-full flex items-center gap-12 p-16 rounded-14 border transition-all duration-100 ease-in-out ${
         selected
           ? 'border-primary bg-[#5F9B45]/10 text-text-highlight'
           : 'border-stroke-10-trans bg-surface-10 text-text-20'

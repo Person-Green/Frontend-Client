@@ -21,7 +21,7 @@ const QuestionPlace = ({ answers, setAnswers }: QuestionProps) => {
           key={opt.value}
           type="button"
           onClick={() => setAnswers({ ...answers, place: opt.value })}
-          className={`shrink-0 flex items-center gap-6 px-16 py-6 rounded-full body-m ${
+          className={`shrink-0 flex items-center gap-6 px-16 py-6 rounded-full body-m transition-all duration-100 ease-in-out ${
             selected === opt.value
               ? 'bg-primary text-text-on-primary'
               : 'bg-surface-20 text-text-20'
