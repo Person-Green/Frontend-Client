@@ -48,7 +48,7 @@ const MatchingSurvey = () => {
   const CurrentQuestion = QUESTIONS[step];
 
   return (
-    <>
+    <main className="min-h-screen flex flex-col">
       <DetailHeader>{HEADER_TITLES[step]}</DetailHeader>
       <CurrentQuestion
         step={step + 1}
@@ -58,7 +58,7 @@ const MatchingSurvey = () => {
         onNext={handleNext}
         onPrev={handlePrev}
       />
-    </>
+    </main>
   );
 };
 

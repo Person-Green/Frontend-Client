@@ -26,14 +26,18 @@ const GridCard = ({ label, sub, selected, onClick }: GridCardProps) => (
   <button
     type="button"
     onClick={onClick}
-    className={`flex flex-col items-center justify-center gap-4 p-16 rounded-14 border ${
+    className={`flex flex-col items-center justify-center gap-12 px-16 py-24 rounded-14 border ${
       selected
-        ? 'border-primary bg-primary/10 text-primary'
-        : 'border-gray-200 bg-white text-text-20'
+        ? 'border-primary bg-[#5F9B45]/10 text-primary'
+        : 'border-stroke-10-trans bg-white text-text-20'
     }`}
   >
     <span className="body-s">{label}</span>
-    <span className="label-s text-text-30">{sub}</span>
+    <span className={`label-s ${
+      selected
+        ? 'text-primary'
+        : 'text-text-30'
+    }`}>{sub}</span>
   </button>
 );
 
@@ -48,44 +52,46 @@ const QuestionTempHumidity = ({
   const ready = answers.temperature && answers.humidity;
 
   return (
-    <main className="min-h-screen flex flex-col p-20">
+    <main className="flex flex-1 flex-col p-20 gap-24">
       <ProgressBar current={step} total={total} />
-      <MatchingTitle icon='dew_point' textSize='title-l' >
-        장소의 온도와 습도는
-        <br />
-        어떤 편인가요?
-      </MatchingTitle>
+      <div className="flex flex-col flex-1 gap-24 py-24">
+        <MatchingTitle icon='dew_point' textSize='title-l' >
+          장소의 온도와 습도는
+          <br />
+          어떤 편인가요?
+        </MatchingTitle>
 
-      <div className="flex flex-col gap-16 flex-1">
-        <div className="flex flex-col gap-8">
-          <span className="label-s text-text-30">온도</span>
-          <div className="grid grid-cols-3 gap-8">
-            {TEMP_OPTIONS.map((opt) => (
-              <GridCard
-                key={opt.value}
-                label={opt.label}
-                sub={opt.sub}
-                selected={answers.temperature === opt.value}
-                onClick={() =>
-                  setAnswers({ ...answers, temperature: opt.value })
-                }
-              />
-            ))}
+        <div className="flex flex-col gap-16 py-16">
+          <div className="flex flex-col gap-6">
+            <span className="label-s text-text-30">온도</span>
+            <div className="grid grid-cols-3 gap-8">
+              {TEMP_OPTIONS.map((opt) => (
+                <GridCard
+                  key={opt.value}
+                  label={opt.label}
+                  sub={opt.sub}
+                  selected={answers.temperature === opt.value}
+                  onClick={() =>
+                    setAnswers({ ...answers, temperature: opt.value })
+                  }
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-8">
-          <span className="label-s text-text-30">습도</span>
-          <div className="grid grid-cols-3 gap-8">
-            {HUMIDITY_OPTIONS.map((opt) => (
-              <GridCard
-                key={opt.value}
-                label={opt.label}
-                sub={opt.sub}
-                selected={answers.humidity === opt.value}
-                onClick={() => setAnswers({ ...answers, humidity: opt.value })}
-              />
-            ))}
+          <div className="flex flex-col gap-6">
+            <span className="label-s text-text-30">습도</span>
+            <div className="grid grid-cols-3 gap-8">
+              {HUMIDITY_OPTIONS.map((opt) => (
+                <GridCard
+                  key={opt.value}
+                  label={opt.label}
+                  sub={opt.sub}
+                  selected={answers.humidity === opt.value}
+                  onClick={() => setAnswers({ ...answers, humidity: opt.value })}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
