@@ -1,4 +1,4 @@
-import Button from '../../shared/button.tsx';
+import Button from '../../shared/ui/button.tsx';
 import AllPlant from '../../assets/plants/allPlant.svg';
 import Google from '../../assets/icon/google.svg';
 
