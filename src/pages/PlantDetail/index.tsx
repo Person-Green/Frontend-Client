@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getPlantById, addFavorite, removeFavorite } from '../../shared/api';
 import type { PlantDetailResponse } from '../../shared/api';
-import Button from '../../shared/button';
+import Button from '../../shared/ui/button';
 
 const difficultyLabel: Record<string, string> = {
   VERY_EASY: '관리쉬움',

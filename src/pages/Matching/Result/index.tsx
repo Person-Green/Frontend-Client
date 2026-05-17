@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Button from '../../../shared/button.tsx';
+import Button from '../../../shared/ui/button.tsx';
 import type { SurveyAnswers } from '../Survey/types.ts';
-<<<<<<< refs/remotes/origin/feat/#37/make
-=======
 import ResultPlant from './components/ResultPlant.tsx';
+import { recommendPlants } from '../../../shared/api/plants.ts';
 import type {
   RecommendPlantsRequest,
   RecommendPlantsResponse,
@@ -15,7 +15,6 @@ import type {
   ExperienceLevelType,
   PlacementType,
 } from '../../../shared/api/types.ts';
-
 
 // ─── Survey 값 → API 요청 값 매핑 ────────────────────────────────────────────
 
@@ -80,7 +79,6 @@ function buildRequest(answers: SurveyAnswers): RecommendPlantsRequest {
 }
 
 // ─── 컴포넌트 ─────────────────────────────────────────────────────────────────
->>>>>>> local
 
 const MatchingResult = () => {
   const navigate = useNavigate();
@@ -88,15 +86,32 @@ const MatchingResult = () => {
   const answers = (location.state as { answers?: SurveyAnswers } | null)
     ?.answers;
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<RecommendPlantsResponse | null>(null);
+
+  useEffect(() => {
+    if (!answers) return;
+
+    const fetch = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await recommendPlants(buildRequest(answers));
+        setResult(data);
+      } catch {
+        setError('추천 식물을 불러오는 데 실패했어요. 다시 시도해 주세요.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetch();
+  }, []);
+
   return (
     <main className="min-h-screen flex flex-col p-20">
       <h1 className="title-l py-24">매칭 결과</h1>
-<<<<<<< refs/remotes/origin/feat/#37/make
-      <pre className="flex-1 body-s whitespace-pre-wrap">
-        {JSON.stringify(answers ?? {}, null, 2)}
-      </pre>
-      <div className="h-fit">
-=======
 
       {loading && (
         <div className="flex-1 flex items-center justify-center">
@@ -122,7 +137,6 @@ const MatchingResult = () => {
       )}
 
       <div className="h-fit pt-24">
->>>>>>> local
         <Button onClick={() => navigate('/')}>홈으로</Button>
       </div>
     </main>
