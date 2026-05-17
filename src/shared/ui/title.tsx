@@ -3,7 +3,7 @@ interface TitleProps {
   title: string;
 }
 
-const Title = ({ icon, title, textSize }: TitleProps) => {
+const Title = ({ icon, title }: TitleProps) => {
   return (
     <div className="flex items-center gap-6">
       <span className="icon-m text-text-highlight">{icon}</span>
