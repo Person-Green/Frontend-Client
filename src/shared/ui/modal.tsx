@@ -1,9 +1,10 @@
-import exitDoor from "../assets/plants/ExitDoor.png";
+import exitDoor from "../../assets/plants/ExitDoor.png";
 import ModalButton from "./modalButton";
 import { useModalStore } from "../stores/modalStore";
 
 const Modal = () => {
   const isOpen = useModalStore((state) => state.isOpen);
+  const useImage = useModalStore((state) => state.content?.useImage)
   const title = useModalStore((state) => state.content?.title);
   const body = useModalStore((state) => state.content?.body);
   const label = useModalStore((state) => state.content?.label);
@@ -16,7 +17,7 @@ const Modal = () => {
   return (
     <div className="fixed bottom-0 w-[calc(100%-16px)] flex flex-col p-16 gap-16 rounded-14 bg-surface-10 z-2000 left-1/2 -translate-x-1/2">
       <div className="flex flex-col py-16 gap-12 items-center">
-        <img src={exitDoor} className="h-[144px] w-[144px]" />
+        {!useImage && <img src={exitDoor} className="h-[144px] w-[144px]" />}
         <h1 className="title-m text-text-10">{title}</h1>
         <div className="flex flex-col gap-6 items-center">
           <p className="body-s text-text-20">{body}</p>

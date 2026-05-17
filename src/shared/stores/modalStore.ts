@@ -2,11 +2,12 @@ import { create } from "zustand";
 
 export interface ModalButton {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
   icon?: string;
 }
 
 export interface ModalContent {
+  useImage: boolean;
   title: string;
   body: string;
   label?: string;
