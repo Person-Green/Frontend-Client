@@ -1,6 +1,6 @@
-import PlantItem from '../../shared/plantItem.tsx';
+import PlantItem from '../../shared/ui/plantItem.tsx';
 import EatenCharacter from '../../assets/character/eaten.svg';
-import Title from '../../shared/title.tsx';
+import Title from '../../shared/ui/title.tsx';
 
 const Home = () => {
   const plantList = [
