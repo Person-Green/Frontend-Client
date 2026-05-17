@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PlantItem from '../../shared/plantItem.tsx';
 import EatenCharacter from '../../assets/character/eaten.svg';
 import Title from '../../shared/title.tsx';
@@ -6,6 +7,7 @@ import { getPlants } from '../../shared/api';
 import type { PlantCatalogItemResponse } from '../../shared/api';
 
 const Home = () => {
+  const navigate = useNavigate();
   const [plantList, setPlantList] = useState<PlantCatalogItemResponse[]>([]);
 
   useEffect(() => {
@@ -52,6 +54,7 @@ const Home = () => {
             <PlantItem
               name={item.plantKoreanName}
               description={`${item.size}, ${item.manageDifficulty}`}
+              onClick={() => navigate(`/plants/${item.plantId}`)}
             />
           ))}
         </ul>
