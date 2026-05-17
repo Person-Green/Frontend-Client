@@ -46,7 +46,7 @@ const Home = () => {
       {/*인기식물*/}
       <article className="flex flex-col gap-12 pb-20 ">
         <div className="flex justify-between items-center">
-          <Title icon="nest_eco_leaf" title="인기식물" textSize="title-m" />
+          <Title icon="nest_eco_leaf" title="인기식물" />
           <span className="py-6 px-12 rounded-max label-s bg-surface-20 text-text-20">
             전체보기
           </span>
@@ -63,7 +63,7 @@ const Home = () => {
       </article>
       {/*식물 팁*/}
       <section className="flex flex-col gap-12">
-        <Title icon="potted_plant" title="식물 팁" textSize="title-s" />
+        <Title icon="potted_plant" title="식물 팁" />
         <div className="flex flex-col p-16 bg-surface-20 rounded-8">
           <span className="label-m !font-[500] text-text-20 whitespace-pre-line">
             {`겨울철에는 물주기 간격을 늘려주세요!\n대부분의 식물이 겨울에는 성장이 느려집니다.`}
