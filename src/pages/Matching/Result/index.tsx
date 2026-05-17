@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../../../shared/ui/button.tsx';
 import type { SurveyAnswers } from '../Survey/types.ts';
@@ -15,8 +16,6 @@ import type {
   ExperienceLevelType,
   PlacementType,
 } from '../../../shared/api/types.ts';
-
-// ─── Survey 값 → API 요청 값 매핑 ────────────────────────────────────────────
 
 const SUNLIGHT_MAP: Record<string, SunlightLevel> = {
   low: 'LOW',
@@ -77,8 +76,6 @@ function buildRequest(answers: SurveyAnswers): RecommendPlantsRequest {
     placement: PLACEMENT_MAP[answers.place ?? ''] ?? 'DESK',
   };
 }
-
-// ─── 컴포넌트 ─────────────────────────────────────────────────────────────────
 
 const MatchingResult = () => {
   const navigate = useNavigate();
