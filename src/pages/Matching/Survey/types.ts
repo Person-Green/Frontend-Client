@@ -10,10 +10,6 @@ export type SurveyAnswers = {
 };
 
 export type QuestionProps = {
-  step: number;
-  total: number;
   answers: SurveyAnswers;
   setAnswers: (answers: SurveyAnswers) => void;
-  onNext: () => void;
-  onPrev: () => void;
 };
