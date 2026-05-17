@@ -23,7 +23,7 @@ const GridCard = ({ label, sub, selected, onClick }: GridCardProps) => (
   <button
     type="button"
     onClick={onClick}
-    className={`flex flex-col items-center justify-center gap-12 px-16 py-24 rounded-14 border ${
+    className={`flex flex-col items-center justify-center gap-12 px-16 py-24 rounded-14 border transition-all duration-100 ease-in-out ${
       selected
         ? 'border-primary bg-[#5F9B45]/10 text-primary'
         : 'border-stroke-10-trans bg-white text-text-20'

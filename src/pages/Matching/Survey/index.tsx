@@ -41,7 +41,7 @@ const MatchingSurvey = () => {
         <div className="flex flex-col gap-4 py-12">
           <div className="w-full h-8 bg-gray-200 rounded-full overflow-hidden bg-surface-20">
             <div
-              className="h-full bg-primary rounded-full transition-all"
+              className="h-full bg-primary rounded-full transition-[width] duration-200 ease-in-out"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -73,7 +73,7 @@ const MatchingSurvey = () => {
           </div>
           )}
           <div className="flex-1">
-            <Button onClick={handleNext}>
+            <Button onClick={handleNext} disabled={!current.isReady(answers)}>
               {isLast ? '결과 보기' : '다음으로'}
             </Button>
           </div>
