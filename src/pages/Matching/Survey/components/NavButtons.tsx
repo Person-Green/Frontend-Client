@@ -12,7 +12,7 @@ const NavButtons = ({
   showPrev,
   onPrev,
   onNext,
-  nextDisabled,
+  // nextDisabled,
   nextLabel = '다음으로',
 }: NavButtonsProps) => {
   return (
@@ -21,13 +21,14 @@ const NavButtons = ({
         <button
           type="button"
           onClick={onPrev}
-          className="flex-1 p-16 rounded-14 bg-gray-200 text-text-20 body-s"
+          className="flex-1 flex items-center justify-center gap-6 p-16 rounded-14 bg-surface-20 text-text-20 body-s"
         >
-          {'< 이전으로'}
+          <span className="icon-s">chevron_backward</span> 
+          <span className="mr-12">이전으로</span>
         </button>
       )}
-      <div className="flex-2">
-        <Button onClick={onNext} dimmed={nextDisabled}>
+      <div className="flex-1">
+        <Button onClick={onNext}>
           {nextLabel}
         </Button>
       </div>
