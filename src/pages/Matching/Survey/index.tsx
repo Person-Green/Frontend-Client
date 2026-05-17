@@ -2,8 +2,7 @@ import { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DetailHeader from '../../../widgets/detailHeader.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
-import ProgressBar from './components/ProgressBar.tsx';
-import NavButtons from './components/NavButtons.tsx';
+import Button from '../../../shared/button.tsx';
 import { QUESTIONS } from './model/questions.ts';
 import type { SurveyAnswers } from './types.ts';
 
@@ -17,6 +16,7 @@ const MatchingSurvey = () => {
   const isLast = step === total - 1;
   const current = QUESTIONS[step];
   const CurrentQuestion = current.component;
+  const progressPercent = ((step + 1) / total) * 100;
 
   const handleNext = () => {
     if (isLast) {
@@ -38,7 +38,20 @@ const MatchingSurvey = () => {
     <main className="min-h-screen flex flex-col">
       <DetailHeader>{current.headerTitle}</DetailHeader>
       <main className="flex flex-1 flex-col p-20 gap-24">
-        <ProgressBar current={step + 1} total={total} />
+        <div className="flex flex-col gap-4 py-12">
+          <div className="w-full h-8 bg-gray-200 rounded-full overflow-hidden bg-surface-20">
+            <div
+              className="h-full bg-primary rounded-full transition-all"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+          <div className="flex justify-between px-6 label-s text-text-30">
+            <span>진행도</span>
+            <p>
+              <span className="text-text-20">{step + 1}</span>/{total}
+            </p>
+          </div>
+        </div>
         <div className="flex flex-col flex-1 gap-24 py-24">
           <MatchingTitle icon={current.titleIcon} textSize="title-l">
             {current.titleLines.map((line, i) => (
@@ -50,13 +63,21 @@ const MatchingSurvey = () => {
           </MatchingTitle>
           <CurrentQuestion answers={answers} setAnswers={setAnswers} />
         </div>
-        <NavButtons
-          showPrev={!isFirst}
-          onPrev={handlePrev}
-          onNext={handleNext}
-          nextDisabled={!current.isReady(answers)}
-          nextLabel={isLast ? '결과 보기' : undefined}
-        />
+        <div className="flex gap-8 h-fit py-16">
+          {!isFirst && (
+            <div className="flex-1">
+            <Button onClick={handlePrev}>
+              <span className="icon-s">chevron_backward</span>
+              <span className="mr-12">이전으로</span>
+            </Button>
+          </div>
+          )}
+          <div className="flex-1">
+            <Button onClick={handleNext}>
+              {isLast ? '결과 보기' : '다음으로'}
+            </Button>
+          </div>
+        </div>
       </main>
     </main>
   );

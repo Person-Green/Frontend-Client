@@ -23,7 +23,7 @@ const OptionCard = ({ icon, label, selected, onClick }: OptionCardProps) => {
       }`}>
         <span className="icon-s">{icon}</span>
       </p>
-      <span className="body-s">{label}</span>
+      <span className="body-s !font-[600]">{label}</span>
     </button>
   );
 };
