@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import PlantItem from '../../shared/ui/plantItem.tsx';
+import { useNavigate } from 'react-router-dom';
+
 import EatenCharacter from '../../assets/character/eaten.svg';
 import Title from '../../shared/ui/title.tsx';
 import { getPlants } from '../../shared/api';
 import type { PlantCatalogItemResponse } from '../../shared/api';
 
 const Home = () => {
+  const navigate = useNavigate();
   const [plantList, setPlantList] = useState<PlantCatalogItemResponse[]>([]);
 
   useEffect(() => {
@@ -50,9 +53,9 @@ const Home = () => {
         <ul className="flex gap-16 overflow-x-scroll no-scrollbar -mx-20 px-20">
           {plantList.map((item) => (
             <PlantItem
-              key={item.plantId}
               name={item.plantKoreanName}
               description={`${item.size}, ${item.manageDifficulty}`}
+              onClick={() => navigate(`/plants/${item.plantId}`)}
             />
           ))}
         </ul>
