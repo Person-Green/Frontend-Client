@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DetailHeader from '../../../widgets/detailHeader.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
@@ -10,8 +10,26 @@ import type { SurveyAnswers } from './types.ts';
 
 const MatchingSurvey = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<SurveyAnswers>({ experience: 'first' });
+  const initial = useMemo(() => {
+    const saved = localStorage.getItem('matchingSurveyAnswers');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as SurveyAnswers;
+        const firstIncomplete = QUESTIONS.findIndex((q) => !q.isReady(parsed));
+        return {
+          answers: parsed,
+          step: firstIncomplete === -1 ? QUESTIONS.length - 1 : firstIncomplete,
+        };
+      } catch {
+        // fall through to default
+      }
+    }
+    return { answers: { experience: 'first' } as SurveyAnswers, step: 0 };
+  }, []);
+  const [step, setStep] = useState(initial.step);
+  const [answers, setAnswers] = useState<SurveyAnswers>(initial.answers);
+  const answersRef = useRef(answers);
+  answersRef.current = answers;
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
@@ -28,6 +46,7 @@ const MatchingSurvey = () => {
           label: '나가기',
           icon: 'meeting_room',
           onClick: () => {
+            localStorage.setItem('matchingSurveyAnswers', JSON.stringify(answersRef.current));
             closeModal();
             navigate('/matching');
           },
@@ -67,6 +86,7 @@ const MatchingSurvey = () => {
 
   const handleNext = () => {
     if (isLast) {
+      localStorage.removeItem('matchingSurveyAnswers');
       navigate('/matching/result', { state: { answers } });
       return;
     }
