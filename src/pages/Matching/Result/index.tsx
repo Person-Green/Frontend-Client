@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../../../shared/ui/button.tsx';
-import { recommendPlants } from '../../../shared/api/plants.ts';
 import type { SurveyAnswers } from '../Survey/types.ts';
+import ResultPlant from './components/ResultPlant.tsx';
+import { recommendPlants } from '../../../shared/api/plants.ts';
 import type {
   RecommendPlantsRequest,
   RecommendPlantsResponse,
@@ -85,29 +86,27 @@ const MatchingResult = () => {
   const answers = (location.state as { answers?: SurveyAnswers } | null)
     ?.answers;
 
-  const [result, setResult] = useState<RecommendPlantsResponse | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<RecommendPlantsResponse | null>(null);
 
   useEffect(() => {
-    if (!answers) {
-      setError('설문 데이터가 없습니다.');
-      setLoading(false);
-      return;
-    }
+    if (!answers) return;
 
-    const request = buildRequest(answers);
-
-    recommendPlants(request)
-      .then((data) => {
+    const fetch = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await recommendPlants(buildRequest(answers));
         setResult(data);
-      })
-      .catch(() => {
-        setError('추천 결과를 불러오는 데 실패했습니다.');
-      })
-      .finally(() => {
+      } catch {
+        setError('추천 식물을 불러오는 데 실패했어요. 다시 시도해 주세요.');
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetch();
   }, []);
 
   return (
@@ -129,27 +128,9 @@ const MatchingResult = () => {
       {result && (
         <div className="flex-1 flex flex-col gap-16">
           <p className="body-s text-text-30">{result.representativeEnvironment}</p>
-          <ul className="flex flex-col gap-12">
-            {result.plants.map((plant) => (
-              <li
-                key={plant.plantId}
-                className="flex flex-col gap-4 p-16 rounded-14 bg-surface-20"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="body-m font-semibold">{plant.plantName}</span>
-                  <span className="label-s text-text-30">{plant.plantEnglishName}</span>
-                </div>
-                <p className="body-s text-text-20">{plant.description}</p>
-                {plant.reasons.length > 0 && (
-                  <ul className="flex flex-col gap-2 mt-4">
-                    {plant.reasons.map((reason, i) => (
-                      <li key={i} className="label-s text-primary">
-                        • {reason}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
+          <ul className="grid grid-cols-2 gap-x-12 gap-y-24">
+            {result.plants.map((plant, index) => (
+              <ResultPlant key={plant.plantId} plant={plant} rank={index + 1} />
             ))}
           </ul>
         </div>
