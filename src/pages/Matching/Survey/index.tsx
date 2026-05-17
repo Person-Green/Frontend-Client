@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DetailHeader from '../../../widgets/detailHeader.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
-import Button from '../../../shared/button.tsx';
+import Button from '../../../shared/ui/button.tsx';
 import { QUESTIONS } from './model/questions.ts';
 import type { SurveyAnswers } from './types.ts';
 
