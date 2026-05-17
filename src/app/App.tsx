@@ -8,6 +8,7 @@ import Home from '../pages/Home';
 import Matching from '../pages/Matching';
 import MatchingSurvey from '../pages/Matching/Survey';
 import MatchingResult from '../pages/Matching/Result';
+import PlantDetail from '../pages/PlantDetail';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/matching" element={<Matching />} />
         </Route>
+        <Route path="/plants/:plantId" element={<PlantDetail />} />
         <Route path="/auth" element={<AuthFlow />} />
         <Route path="/matching/survey" element={<MatchingSurvey />} />
         <Route path="/matching/result" element={<MatchingResult />} />
