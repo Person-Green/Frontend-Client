@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../../../shared/ui/button.tsx';
 import type { SurveyAnswers } from '../Survey/types.ts';
-<<<<<<< refs/remotes/origin/feat/#37/make
-=======
 import ResultPlant from './components/ResultPlant.tsx';
+import { recommendPlants } from '../../../shared/api/plants.ts';
 import type {
   RecommendPlantsRequest,
   RecommendPlantsResponse,
@@ -15,9 +15,6 @@ import type {
   ExperienceLevelType,
   PlacementType,
 } from '../../../shared/api/types.ts';
-
-
-// ─── Survey 값 → API 요청 값 매핑 ────────────────────────────────────────────
 
 const SUNLIGHT_MAP: Record<string, SunlightLevel> = {
   low: 'LOW',
@@ -79,24 +76,39 @@ function buildRequest(answers: SurveyAnswers): RecommendPlantsRequest {
   };
 }
 
-// ─── 컴포넌트 ─────────────────────────────────────────────────────────────────
->>>>>>> local
-
 const MatchingResult = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const answers = (location.state as { answers?: SurveyAnswers } | null)
     ?.answers;
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<RecommendPlantsResponse | null>(null);
+
+  useEffect(() => {
+    if (!answers) return;
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    recommendPlants(buildRequest(answers))
+      .then((data) => {
+        if (!cancelled) setResult(data);
+      })
+      .catch(() => {
+        if (!cancelled) setError('추천 결과를 불러오지 못했어요.');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [answers]);
+
   return (
     <main className="min-h-screen flex flex-col p-20">
       <h1 className="title-l py-24">매칭 결과</h1>
-<<<<<<< refs/remotes/origin/feat/#37/make
-      <pre className="flex-1 body-s whitespace-pre-wrap">
-        {JSON.stringify(answers ?? {}, null, 2)}
-      </pre>
-      <div className="h-fit">
-=======
 
       {loading && (
         <div className="flex-1 flex items-center justify-center">
@@ -122,7 +134,6 @@ const MatchingResult = () => {
       )}
 
       <div className="h-fit pt-24">
->>>>>>> local
         <Button onClick={() => navigate('/')}>홈으로</Button>
       </div>
     </main>
