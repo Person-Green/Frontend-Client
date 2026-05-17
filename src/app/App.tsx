@@ -5,6 +5,10 @@ import AuthFlow from '../pages/AuthFlow';
 import AuthCallback from '../pages/AuthFlow/callback.tsx';
 import EnterName from '../pages/AuthFlow/enterName.tsx';
 import Home from '../pages/Home';
+import Matching from '../pages/Matching';
+import MatchingSurvey from '../pages/Matching/Survey';
+import MatchingResult from '../pages/Matching/Result';
+import PlantDetail from '../pages/PlantDetail';
 
 function App() {
   return (
@@ -12,8 +16,12 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/matching" element={<Matching />} />
         </Route>
+        <Route path="/plants/:plantId" element={<PlantDetail />} />
         <Route path="/auth" element={<AuthFlow />} />
+        <Route path="/matching/survey" element={<MatchingSurvey />} />
+        <Route path="/matching/result" element={<MatchingResult />} />
         <Route path="/auth/google/callback" element={<AuthCallback />} />
         <Route path="/auth/enter-name" element={<EnterName />} />
         <Route path="*" element={<NotFound />} />

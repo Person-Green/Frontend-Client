@@ -201,3 +201,7 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.height-530 {
+  height: 530px;
+}
