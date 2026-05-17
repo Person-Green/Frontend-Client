@@ -9,7 +9,7 @@ import type { SurveyAnswers } from './types.ts';
 const MatchingSurvey = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<SurveyAnswers>({});
+  const [answers, setAnswers] = useState<SurveyAnswers>({ experience: 'first' });
 
   const total = QUESTIONS.length;
   const isFirst = step === 0;
@@ -74,7 +74,7 @@ const MatchingSurvey = () => {
           )}
           <div className="flex-1">
             <Button onClick={handleNext} disabled={!current.isReady(answers)}>
-              {isLast ? '결과 보기' : '다음으로'}
+              다음으로
             </Button>
           </div>
         </div>
