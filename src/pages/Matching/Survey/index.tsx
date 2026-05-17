@@ -1,15 +1,81 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DetailHeader from '../../../widgets/detailHeader.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import Button from '../../../shared/ui/button.tsx';
+import Modal from '../../../shared/ui/modal.tsx';
+import { useModalStore } from '../../../shared/stores/modalStore.ts';
 import { QUESTIONS } from './model/questions.ts';
 import type { SurveyAnswers } from './types.ts';
 
 const MatchingSurvey = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<SurveyAnswers>({ experience: 'first' });
+  const initial = useMemo(() => {
+    const saved = localStorage.getItem('matchingSurveyAnswers');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as SurveyAnswers;
+        const firstIncomplete = QUESTIONS.findIndex((q) => !q.isReady(parsed));
+        return {
+          answers: parsed,
+          step: firstIncomplete === -1 ? QUESTIONS.length - 1 : firstIncomplete,
+        };
+      } catch {
+        // fall through to default
+      }
+    }
+    return { answers: { experience: 'first' } as SurveyAnswers, step: 0 };
+  }, []);
+  const [step, setStep] = useState(initial.step);
+  const [answers, setAnswers] = useState<SurveyAnswers>(initial.answers);
+  const answersRef = useRef(answers);
+  answersRef.current = answers;
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
+
+  const showExitModal = () => {
+    openModal({
+      useImage: false,
+      title: '정말 나가시겠어요?',
+      body: '지금 나가셔도 언제든지 다시 할 수 있어요!',
+      label: '데이터는 동일한 디바이스에서만 저장됩니다.',
+      buttonAmount: 2,
+      buttons: [
+        { label: '계속하기', onClick: () => closeModal() },
+        {
+          label: '나가기',
+          icon: 'meeting_room',
+          onClick: () => {
+            localStorage.setItem('matchingSurveyAnswers', JSON.stringify(answersRef.current));
+            closeModal();
+            navigate('/matching');
+          },
+        },
+      ],
+    });
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const isRefresh =
+        e.key === 'F5' ||
+        ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'r');
+      if (isRefresh) {
+        e.preventDefault();
+        showExitModal();
+      }
+    };
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   const total = QUESTIONS.length;
   const isFirst = step === 0;
@@ -20,6 +86,7 @@ const MatchingSurvey = () => {
 
   const handleNext = () => {
     if (isLast) {
+      localStorage.removeItem('matchingSurveyAnswers');
       navigate('/matching/result', { state: { answers } });
       return;
     }
@@ -36,7 +103,7 @@ const MatchingSurvey = () => {
 
   return (
     <main className="min-h-screen flex flex-col">
-      <DetailHeader>{current.headerTitle}</DetailHeader>
+      <DetailHeader onBack={showExitModal}>{current.headerTitle}</DetailHeader>
       <main className="flex flex-1 flex-col p-20 gap-24">
         <div className="flex flex-col gap-4 py-12">
           <div className="w-full h-8 bg-gray-200 rounded-full overflow-hidden bg-surface-20">
@@ -79,6 +146,7 @@ const MatchingSurvey = () => {
           </div>
         </div>
       </main>
+      <Modal />
     </main>
   );
 };

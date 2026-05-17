@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import PlantItem from '../../shared/ui/plantItem.tsx';
 import { useNavigate } from 'react-router-dom';
-
 import EatenCharacter from '../../assets/character/eaten.svg';
 import Title from '../../shared/ui/title.tsx';
 import { getPlants } from '../../shared/api';
