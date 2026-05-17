@@ -29,7 +29,7 @@ const GridCard = ({ label, sub, selected, onClick }: GridCardProps) => (
         : 'border-stroke-10-trans bg-white text-text-20'
     }`}
   >
-    <span className="body-s">{label}</span>
+    <span className="body-s !font-[600]">{label}</span>
     <span className={`label-s ${selected ? 'text-primary' : 'text-text-30'}`}>
       {sub}
     </span>
