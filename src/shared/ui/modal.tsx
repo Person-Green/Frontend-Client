@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import exitDoor from "../../assets/plants/ExitDoor.png";
 import ModalButton from "./modalButton";
 import Dim from "./dim";
@@ -15,7 +16,7 @@ const Modal = () => {
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <>
       <Dim />
       <div className="fixed bottom-0 w-[calc(100%-16px)] flex flex-col p-16 gap-16 rounded-14 bg-surface-10 z-2000 left-1/2 -translate-x-1/2">
@@ -33,7 +34,8 @@ const Modal = () => {
         ))}
       </div>
       </div>
-    </>
+    </>,
+    document.body
   );
 };
 
