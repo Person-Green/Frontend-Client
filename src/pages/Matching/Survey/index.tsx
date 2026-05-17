@@ -1,24 +1,11 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import QuestionPlace from './QuestionPlace.tsx';
-import QuestionLight from './QuestionLight.tsx';
-import QuestionAir from './QuestionAir.tsx';
-import QuestionTempHumidity from './QuestionTempHumidity.tsx';
-import QuestionCare from './QuestionCare.tsx';
-import QuestionPet from './QuestionPet.tsx';
 import DetailHeader from '../../../widgets/detailHeader.tsx';
+import MatchingTitle from '../../../shared/matchingTitle.tsx';
+import ProgressBar from './components/ProgressBar.tsx';
+import NavButtons from './components/NavButtons.tsx';
+import { QUESTIONS } from './model/questions.ts';
 import type { SurveyAnswers } from './types.ts';
-
-const QUESTIONS = [
-  QuestionPlace,
-  QuestionLight,
-  QuestionAir,
-  QuestionTempHumidity,
-  QuestionCare,
-  QuestionPet,
-];
-
-const HEADER_TITLES = ['장소선택', '채광', '환기 & 공기', '온도 & 습도', '관리', '반려동물 & 경험'];
 
 const MatchingSurvey = () => {
   const navigate = useNavigate();
@@ -28,6 +15,8 @@ const MatchingSurvey = () => {
   const total = QUESTIONS.length;
   const isFirst = step === 0;
   const isLast = step === total - 1;
+  const current = QUESTIONS[step];
+  const CurrentQuestion = current.component;
 
   const handleNext = () => {
     if (isLast) {
@@ -45,19 +34,30 @@ const MatchingSurvey = () => {
     setStep((prev) => prev - 1);
   };
 
-  const CurrentQuestion = QUESTIONS[step];
-
   return (
     <main className="min-h-screen flex flex-col">
-      <DetailHeader>{HEADER_TITLES[step]}</DetailHeader>
-      <CurrentQuestion
-        step={step + 1}
-        total={total}
-        answers={answers}
-        setAnswers={setAnswers}
-        onNext={handleNext}
-        onPrev={handlePrev}
-      />
+      <DetailHeader>{current.headerTitle}</DetailHeader>
+      <main className="flex flex-1 flex-col p-20 gap-24">
+        <ProgressBar current={step + 1} total={total} />
+        <div className="flex flex-col flex-1 gap-24 py-24">
+          <MatchingTitle icon={current.titleIcon} textSize="title-l">
+            {current.titleLines.map((line, i) => (
+              <Fragment key={i}>
+                {i > 0 && <br />}
+                {line}
+              </Fragment>
+            ))}
+          </MatchingTitle>
+          <CurrentQuestion answers={answers} setAnswers={setAnswers} />
+        </div>
+        <NavButtons
+          showPrev={!isFirst}
+          onPrev={handlePrev}
+          onNext={handleNext}
+          nextDisabled={!current.isReady(answers)}
+          nextLabel={isLast ? '결과 보기' : undefined}
+        />
+      </main>
     </main>
   );
 };

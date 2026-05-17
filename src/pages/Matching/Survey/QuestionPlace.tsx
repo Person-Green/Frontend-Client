@@ -1,6 +1,3 @@
-import ProgressBar from './components/ProgressBar.tsx';
-import MatchingTitle from '../../../shared/matchingTitle.tsx';
-import NavButtons from './components/NavButtons.tsx';
 import type { QuestionProps } from './types.ts';
 
 const PLACE_OPTIONS = [
@@ -14,51 +11,27 @@ const PLACE_OPTIONS = [
   { value: 'window', label: '창가', icon: 'window' },
 ];
 
-const QuestionPlace = ({
-  step,
-  total,
-  answers,
-  setAnswers,
-  onNext,
-  onPrev,
-}: QuestionProps) => {
+const QuestionPlace = ({ answers, setAnswers }: QuestionProps) => {
   const selected = answers.place;
 
   return (
-    <main className="flex flex-1 flex-col gap-24 p-20">
-      <ProgressBar current={step} total={total} />
-      <div className="flex flex-col flex-1 gap-24 py-24">
-        <MatchingTitle icon='place_item' textSize='title-l' >
-          주로 어느 장소에 식물을
-          <br />
-          배치하실 예정인가요?
-        </MatchingTitle>
-
-        <div className="flex flex-wrap gap-8 py-16 items-start">
-          {PLACE_OPTIONS.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              onClick={() => setAnswers({ ...answers, place: opt.value })}
-              className={`shrink-0 flex items-center gap-6 px-16 py-6 rounded-full body-m ${
-                selected === opt.value
-                  ? 'bg-primary text-text-on-primary'
-                  : 'bg-surface-20 text-text-20'
-              }`}
-            >
-              <span className='icon-s'>{opt.icon}</span>
-              <span>{opt.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-      <NavButtons
-        showPrev={false}
-        onPrev={onPrev}
-        onNext={onNext}
-        nextDisabled={!selected}
-      />
-    </main>
+    <div className="flex flex-wrap gap-8 py-16 items-start">
+      {PLACE_OPTIONS.map((opt) => (
+        <button
+          key={opt.value}
+          type="button"
+          onClick={() => setAnswers({ ...answers, place: opt.value })}
+          className={`shrink-0 flex items-center gap-6 px-16 py-6 rounded-full body-m ${
+            selected === opt.value
+              ? 'bg-primary text-text-on-primary'
+              : 'bg-surface-20 text-text-20'
+          }`}
+        >
+          <span className="icon-s">{opt.icon}</span>
+          <span>{opt.label}</span>
+        </button>
+      ))}
+    </div>
   );
 };
 
