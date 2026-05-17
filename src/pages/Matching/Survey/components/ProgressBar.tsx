@@ -7,9 +7,9 @@ const ProgressBar = ({ current, total }: ProgressBarProps) => {
   const percent = (current / total) * 100;
   return (
     <div className="flex flex-col gap-4 py-12">
-      <div className="w-full h-8 bg-gray-200 rounded-full overflow-hidden">
+      <div className="w-full h-8 bg-gray-200 rounded-full overflow-hidden bg-surface-20">
         <div
-          className="h-full bg-primary transition-all"
+          className="h-full bg-primary rounded-full transition-all"
           style={{ width: `${percent}%` }}
         />
       </div>
