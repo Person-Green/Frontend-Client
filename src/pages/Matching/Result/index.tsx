@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../../../shared/ui/button.tsx';
 import type { SurveyAnswers } from '../Survey/types.ts';
@@ -88,23 +89,22 @@ const MatchingResult = () => {
 
   useEffect(() => {
     if (!answers) return;
-    let cancelled = false;
-    setLoading(true);
-    setError(null);
-    recommendPlants(buildRequest(answers))
-      .then((data) => {
-        if (!cancelled) setResult(data);
-      })
-      .catch(() => {
-        if (!cancelled) setError('추천 결과를 불러오지 못했어요.');
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-    return () => {
-      cancelled = true;
+
+    const fetch = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await recommendPlants(buildRequest(answers));
+        setResult(data);
+      } catch {
+        setError('추천 식물을 불러오는 데 실패했어요. 다시 시도해 주세요.');
+      } finally {
+        setLoading(false);
+      }
     };
-  }, [answers]);
+
+    fetch();
+  }, []);
 
   return (
     <main className="min-h-screen flex flex-col p-20">
