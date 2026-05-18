@@ -10,6 +10,7 @@ import MatchingSurvey from '../pages/Matching/Survey';
 import MatchingResult from '../pages/Matching/Result';
 import MatchingHistory from '../pages/Matching/History';
 import PlantDetail from '../pages/PlantDetail';
+import Encyclopedia from '../pages/Encyclopedia';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/matching" element={<Matching />} />
+          <Route path="/encyclopedia" element={<Encyclopedia />} />
         </Route>
         <Route path="/plants/:plantId" element={<PlantDetail />} />
         <Route path="/auth" element={<AuthFlow />} />
