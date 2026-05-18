@@ -8,6 +8,7 @@ import Home from '../pages/Home';
 import Matching from '../pages/Matching';
 import MatchingSurvey from '../pages/Matching/Survey';
 import MatchingResult from '../pages/Matching/Result';
+import MatchingHistory from '../pages/Matching/History';
 import PlantDetail from '../pages/PlantDetail';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/auth" element={<AuthFlow />} />
         <Route path="/matching/survey" element={<MatchingSurvey />} />
         <Route path="/matching/result" element={<MatchingResult />} />
+        <Route path="/matching/history" element={<MatchingHistory />} />
         <Route path="/auth/google/callback" element={<AuthCallback />} />
         <Route path="/auth/enter-name" element={<EnterName />} />
         <Route path="*" element={<NotFound />} />
