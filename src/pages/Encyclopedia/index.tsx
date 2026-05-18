@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { PlantCatalogItemResponse } from '../../shared/api';
+import { useFilterStore } from '../../shared/stores/filterStore';
 import EncyclopediaCard from './EncyclopediaCard';
 import TabBar, { type EncyclopediaTab } from './TabBar';
+import FilterModal from './FilterModal';
 
 const MOCK_PLANTS: PlantCatalogItemResponse[] = [
   {
@@ -60,28 +62,47 @@ const MOCK_PLANTS: PlantCatalogItemResponse[] = [
 const Encyclopedia = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<EncyclopediaTab>('all');
+  const applied = useFilterStore((s) => s.applied);
+  const openFilterModal = useFilterStore((s) => s.openModal);
 
   const visiblePlants = useMemo(() => {
+    let plants = MOCK_PLANTS;
     if (activeTab === 'popular') {
-      return [...MOCK_PLANTS].sort((a, b) => b.favoriteCount - a.favoriteCount);
+      plants = [...plants].sort((a, b) => b.favoriteCount - a.favoriteCount);
+    } else if (activeTab === 'favorites') {
+      plants = plants.filter((p) => p.isFavorite);
     }
-    if (activeTab === 'favorites') {
-      return MOCK_PLANTS.filter((p) => p.isFavorite);
+    if (applied.manageDifficulty) {
+      plants = plants.filter(
+        (p) => p.manageDifficulty === applied.manageDifficulty,
+      );
     }
-    return MOCK_PLANTS;
-  }, [activeTab]);
+    if (applied.airPurification) {
+      plants = plants.filter(
+        (p) => p.airPurification === applied.airPurification,
+      );
+    }
+    if (applied.plantSize) {
+      plants = plants.filter((p) => p.size === applied.plantSize);
+    }
+    return plants;
+  }, [activeTab, applied]);
 
   return (
-    <main className="flex flex-col gap-24 p-20 pb-100">
+    <main className="flex flex-col gap-24 p-20 pb-[100px]">
       <TabBar active={activeTab} onChange={setActiveTab} />
 
       <section className="flex flex-col gap-8">
         <div className="flex items-center justify-between px-6">
           <span className="label-s text-text-20">총 {visiblePlants.length}개</span>
-          <div className="flex items-center text-text-30">
+          <button
+            type="button"
+            onClick={openFilterModal}
+            className="flex items-center text-text-30"
+          >
             <span className="icon-xs">filter_alt</span>
             <span className="label-s">필터</span>
-          </div>
+          </button>
         </div>
 
         <ul className="grid grid-cols-2 gap-x-8 gap-y-16">
@@ -94,6 +115,8 @@ const Encyclopedia = () => {
           ))}
         </ul>
       </section>
+
+      <FilterModal />
     </main>
   );
 };

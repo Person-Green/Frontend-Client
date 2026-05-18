@@ -41,7 +41,7 @@ const EncyclopediaCard = ({ plant, onClick }: EncyclopediaCardProps) => {
           {`관리 ${plant.manageDifficulty}, ${plant.size}, 공기정화 ${plant.airPurification}`}
         </p>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           <span
             className={`icon-xs-fill ${plant.isFavorite ? 'text-primary' : 'text-text-30'}`}
           >
