@@ -2,7 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import DetailHeader from '../../../widgets/detailHeader.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import Title from '../../../shared/ui/title.tsx';
+import Modal from '../../../shared/ui/modal.tsx';
 import ResultPlant from './components/ResultPlant.tsx';
+import { useModalStore } from '../../../shared/stores/modalStore.ts';
 import type {
   PlantRecommendationResponse,
   RecommendPlantsResponse,
@@ -44,11 +46,34 @@ const MOCK_RESULT: RecommendPlantsResponse = {
 
 const MatchingResult = () => {
   const navigate = useNavigate();
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
   const result = MOCK_RESULT;
+
+  const showExitModal = () => {
+    openModal({
+      useImage: false,
+      title: '나가기 전에!',
+      body: '식물 찜하기 하셨나요?',
+      label: '다시 매칭기록에서 찾아보실수 있어요!',
+      buttonAmount: 2,
+      buttons: [
+        { label: '더 둘러보기', onClick: () => closeModal() },
+        {
+          label: '나가기',
+          icon: 'meeting_room',
+          onClick: () => {
+            closeModal();
+            navigate('/');
+          },
+        },
+      ],
+    });
+  };
 
   return (
     <main className="min-h-screen flex flex-col">
-      <DetailHeader onBack={() => navigate('/')}>매칭결과</DetailHeader>
+      <DetailHeader onBack={showExitModal}>매칭결과</DetailHeader>
       <section className="flex flex-1 flex-col gap-24 p-20">
         <div className="flex flex-1 flex-col gap-24 pt-24">
           <MatchingTitle icon="bookmarks" textSize="title-l">
@@ -68,6 +93,7 @@ const MatchingResult = () => {
           </div>
         </div>
       </section>
+      <Modal />
     </main>
   );
 };
