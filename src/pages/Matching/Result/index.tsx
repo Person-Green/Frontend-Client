@@ -3,7 +3,7 @@ import DetailHeader from '../../../widgets/detailHeader.tsx';
 import MatchingTitle from '../../../shared/matchingTitle.tsx';
 import Title from '../../../shared/ui/title.tsx';
 import Modal from '../../../shared/ui/modal.tsx';
-import ResultPlant from './components/ResultPlant.tsx';
+import ResultPlant from '../../../shared/ui/ResultPlant.tsx';
 import { useModalStore } from '../../../shared/stores/modalStore.ts';
 import type {
   PlantRecommendationResponse,
