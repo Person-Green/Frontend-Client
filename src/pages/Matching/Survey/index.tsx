@@ -133,7 +133,7 @@ const MatchingSurvey = () => {
         <div className="flex gap-8 h-fit py-16">
           {!isFirst && (
             <div className="flex-1">
-            <Button onClick={handlePrev}>
+            <Button onClick={handlePrev} undo={true}>
               <span className="icon-s">chevron_backward</span>
               <span className="mr-12">이전으로</span>
             </Button>
