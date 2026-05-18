@@ -21,7 +21,7 @@ const Home = () => {
       <article className="flex flex-col gap-16 p-16 bg-surface-20 rounded-8">
         <figure className="flex flex-col gap-6 p-8">
           <div className="flex justify-between p-8">
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6"> 
               <span className="body-s text-text-20">매칭하기</span>
               <span className="title-s text-text-10">맞춤 식물 큐레이션</span>
             </div>
