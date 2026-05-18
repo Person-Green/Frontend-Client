@@ -1,141 +1,73 @@
-import { useEffect, useState } from 'react';
-
-import { useLocation, useNavigate } from 'react-router-dom';
-import Button from '../../../shared/ui/button.tsx';
-import type { SurveyAnswers } from '../Survey/types.ts';
+import { useNavigate } from 'react-router-dom';
+import DetailHeader from '../../../widgets/detailHeader.tsx';
+import MatchingTitle from '../../../shared/matchingTitle.tsx';
+import Title from '../../../shared/ui/title.tsx';
 import ResultPlant from './components/ResultPlant.tsx';
-import { recommendPlants } from '../../../shared/api/plants.ts';
 import type {
-  RecommendPlantsRequest,
+  PlantRecommendationResponse,
   RecommendPlantsResponse,
-  SunlightLevel,
-  VentilationLevel,
-  TemperatureLevel,
-  HumidityLevel,
-  CareLevelType,
-  ExperienceLevelType,
-  PlacementType,
 } from '../../../shared/api/types.ts';
 
-const SUNLIGHT_MAP: Record<string, SunlightLevel> = {
-  low: 'LOW',
-  mid: 'MEDIUM',
-  high: 'HIGH',
+const MOCK_PLANT_BASE: Omit<PlantRecommendationResponse, 'plantId' | 'score'> = {
+  plantName: '스투키',
+  plantEnglishName: 'Stucky',
+  reasons: [],
+  cautions: [],
+  representativeEnvironment: '실내',
+  secondaryEnvironmentTags: [],
+  airPurificationLevel: 'HIGH',
+  petSafetyLevel: 'SAFE',
+  difficultyLevel: 'EASY',
+  sizeCategory: 'MEDIUM',
+  recommendedPlacements: [],
+  description: '관리 쉬움, 중형, 공기정화 높음',
 };
 
-const VENTILATION_MAP: Record<string, VentilationLevel> = {
-  low: 'LOW',
-  mid: 'NORMAL',
-  high: 'HIGH',
+const MOCK_RESULT: RecommendPlantsResponse = {
+  historyId: 0,
+  saved: false,
+  representativeEnvironment: '실내',
+  secondaryEnvironmentTags: [],
+  plants: [
+    { ...MOCK_PLANT_BASE, plantId: 'mock-1', score: 107 },
+    { ...MOCK_PLANT_BASE, plantId: 'mock-2', score: 94000 },
+    { ...MOCK_PLANT_BASE, plantId: 'mock-3', score: 9000 },
+    { ...MOCK_PLANT_BASE, plantId: 'mock-4', score: 62 },
+    { ...MOCK_PLANT_BASE, plantId: 'mock-4', score: 62 },
+    { ...MOCK_PLANT_BASE, plantId: 'mock-4', score: 62 },
+    { ...MOCK_PLANT_BASE, plantId: 'mock-4', score: 62 },
+    { ...MOCK_PLANT_BASE, plantId: 'mock-4', score: 62 },
+    { ...MOCK_PLANT_BASE, plantId: 'mock-4', score: 62 },
+  
+  ],
 };
-
-const TEMPERATURE_MAP: Record<string, TemperatureLevel> = {
-  cool: 'LOW',
-  normal: 'NORMAL',
-  hot: 'HIGH',
-};
-
-const HUMIDITY_MAP: Record<string, HumidityLevel> = {
-  dry: 'LOW',
-  mid: 'NORMAL',
-  wet: 'HIGH',
-};
-
-const CARE_MAP: Record<string, CareLevelType> = {
-  easy: 'LOW',
-  mid: 'MEDIUM',
-  high: 'HIGH',
-};
-
-const EXPERIENCE_MAP: Record<string, ExperienceLevelType> = {
-  first: 'BEGINNER',
-  few: 'INTERMEDIATE',
-  expert: 'ADVANCED',
-};
-
-const PLACEMENT_MAP: Record<string, PlacementType> = {
-  bedroom: 'BEDROOM',
-  living: 'LIVING_ROOM',
-  kitchen: 'KITCHEN',
-  office: 'OFFICE',
-  desk: 'DESK',
-  bathroom: 'BATHROOM',
-  veranda: 'BALCONY',
-  window: 'WINDOW',
-};
-
-function buildRequest(answers: SurveyAnswers): RecommendPlantsRequest {
-  return {
-    sunlight: SUNLIGHT_MAP[answers.light ?? ''] ?? 'LOW',
-    ventilation: VENTILATION_MAP[answers.air ?? ''] ?? 'LOW',
-    temperature: TEMPERATURE_MAP[answers.temperature ?? ''] ?? 'LOW',
-    humidity: HUMIDITY_MAP[answers.humidity ?? ''] ?? 'LOW',
-    careLevel: CARE_MAP[answers.care ?? ''] ?? 'LOW',
-    experienceLevel: EXPERIENCE_MAP[answers.experience ?? ''] ?? 'BEGINNER',
-    hasPet: answers.pet === 'yes',
-    placement: PLACEMENT_MAP[answers.place ?? ''] ?? 'DESK',
-  };
-}
 
 const MatchingResult = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const answers = (location.state as { answers?: SurveyAnswers } | null)
-    ?.answers;
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<RecommendPlantsResponse | null>(null);
-
-  useEffect(() => {
-    if (!answers) return;
-
-    const fetch = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await recommendPlants(buildRequest(answers));
-        setResult(data);
-      } catch {
-        setError('추천 식물을 불러오는 데 실패했어요. 다시 시도해 주세요.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetch();
-  }, []);
+  const result = MOCK_RESULT;
 
   return (
-    <main className="min-h-screen flex flex-col p-20">
-      <h1 className="title-l py-24">매칭 결과</h1>
+    <main className="min-h-screen flex flex-col">
+      <DetailHeader onBack={() => navigate('/')}>매칭결과</DetailHeader>
+      <section className="flex flex-1 flex-col gap-24 p-20">
+        <div className="flex flex-1 flex-col gap-24 pt-24">
+          <MatchingTitle icon="bookmarks" textSize="title-l">
+            사용자님 장소에
+            <br />
+            알맞는 식물들을 찾았어요!
+          </MatchingTitle>
 
-      {loading && (
-        <div className="flex-1 flex items-center justify-center">
-          <p className="body-s text-text-30">추천 식물을 찾고 있어요...</p>
+          <div className="flex flex-1 flex-col gap-16 py-16">
+            <Title icon="yard" title="추천 식물" />
+
+            <ul className="grid grid-cols-2 gap-x-8 gap-y-12">
+              {result.plants.map((plant, index) => (
+                <ResultPlant key={plant.plantId} plant={plant} rank={index + 1} />
+              ))}
+            </ul>
+          </div>
         </div>
-      )}
-
-      {error && (
-        <div className="flex-1 flex items-center justify-center">
-          <p className="body-s text-red-500">{error}</p>
-        </div>
-      )}
-
-      {result && (
-        <div className="flex-1 flex flex-col gap-16">
-          <p className="body-s text-text-30">{result.representativeEnvironment}</p>
-          <ul className="grid grid-cols-2 gap-x-12 gap-y-24">
-            {result.plants.map((plant, index) => (
-              <ResultPlant key={plant.plantId} plant={plant} rank={index + 1} />
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <div className="h-fit pt-24">
-        <Button onClick={() => navigate('/')}>홈으로</Button>
-      </div>
+      </section>
     </main>
   );
 };
