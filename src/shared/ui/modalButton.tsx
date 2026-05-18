@@ -11,7 +11,7 @@ const ModalButton = ({ index }: ModalButtonProps) => {
   if (!button) return null;
 
   return (
-    <Button icon={button.icon} onClick={button.onClick}>
+    <Button icon={button.icon} onClick={button.onClick} undo={index === 1 && true}>
       {button.label}
     </Button>
   );
