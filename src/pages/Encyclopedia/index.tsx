@@ -113,7 +113,9 @@ const Encyclopedia = () => {
             <EncyclopediaCard
               key={plant.plantId}
               plant={plant}
-              onClick={() => navigate(`/plants/${plant.plantId}`)}
+              onClick={() =>
+                navigate(`/plants/${plant.plantId}`, { state: { plant } })
+              }
             />
           ))}
         </ul>

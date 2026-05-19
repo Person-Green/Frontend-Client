@@ -58,8 +58,8 @@ const RadioOption = ({ selected, label, onClick }: RadioOptionProps) => {
       className="flex items-center gap-6 px-6"
     >
       <span
-        className={`flex items-center justify-center w-[14px] h-[14px] rounded-full border ${
-          selected ? 'border-primary bg-primary' : 'border-stroke-10'
+        className={`flex items-center justify-center w-[14px] h-[14px] outline-offset-[-1px] rounded-full outline transition-all duration-100 ease-in-out ${
+          selected ? 'outline-primary outline-4 outline-offset-[-4px]' : 'outline-stroke-10'
         }`}
       >
         {selected && <span className="w-[6px] h-[6px] rounded-full bg-surface-10" />}
@@ -90,13 +90,13 @@ const FilterSection = ({ config }: FilterSectionProps) => {
         className="flex items-center justify-between w-full"
       >
         <p className="body-m !font-semibold text-text-20">{config.title}</p>
-        <span className="icon-s text-text-30 p-4">
-          {isOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
+        <span className={`icon-s text-text-30 p-4 transition-all duration-200 ease-in-out ${isOpen ? 'rotate-180' : 'rotate-0'}`} >
+          keyboard_arrow_down
         </span>
       </button>
-      {isOpen && (
-        <div className="flex flex-col gap-8 py-12">
-          {config.options.map((option) => (
+        <div className="flex flex-col gap-8 py-12 transition-all duration-500 ease-in-out">
+          {isOpen && 
+            config.options.map((option) => (
             <RadioOption
               key={option.value}
               selected={value === option.value}
@@ -105,7 +105,6 @@ const FilterSection = ({ config }: FilterSectionProps) => {
             />
           ))}
         </div>
-      )}
     </div>
   );
 };
