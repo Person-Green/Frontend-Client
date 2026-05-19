@@ -4,6 +4,10 @@ import { getPlants } from '../../entities';
 import type { PlantCatalogItemResponse } from '../../entities';
 import { useFilterStore } from '../../shared/stores/filterStore';
 import { useHeader } from '../../shared/stores/headerStore';
+import {
+  toAirPurificationLabel,
+  toDifficultyShort,
+} from '../../shared/lib/plantLabels';
 import EncyclopediaCard from './EncyclopediaCard';
 import TabBar, { type EncyclopediaTab } from './TabBar';
 import FilterModal from './FilterModal';
@@ -32,12 +36,12 @@ const Encyclopedia = () => {
     }
     if (applied.manageDifficulty) {
       plants = plants.filter(
-        (p) => p.manageDifficulty === applied.manageDifficulty,
+        (p) => toDifficultyShort(p.manageDifficulty) === applied.manageDifficulty,
       );
     }
     if (applied.airPurification) {
       plants = plants.filter(
-        (p) => p.airPurification === applied.airPurification,
+        (p) => toAirPurificationLabel(p.airPurification) === applied.airPurification,
       );
     }
     if (applied.plantSize) {

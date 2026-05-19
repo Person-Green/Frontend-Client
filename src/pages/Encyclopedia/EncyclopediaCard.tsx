@@ -1,5 +1,9 @@
 import type { PlantCatalogItemResponse } from '../../entities';
 import NonePlantImage from '../../assets/plants/none.svg';
+import {
+  toAirPurificationLabel,
+  toDifficultyShort,
+} from '../../shared/lib/plantLabels';
 
 interface EncyclopediaCardProps {
   plant: PlantCatalogItemResponse;
@@ -41,7 +45,7 @@ const EncyclopediaCard = ({ plant, onClick }: EncyclopediaCardProps) => {
         </p>
 
         <p className="label-s text-text-30 line-clamp-2">
-          {`관리 ${plant.manageDifficulty}, ${plant.size}, 공기정화 ${plant.airPurification}`}
+          {`관리 ${toDifficultyShort(plant.manageDifficulty)}, ${plant.size}, 공기정화 ${toAirPurificationLabel(plant.airPurification)}`}
         </p>
 
         <div className="flex items-center">
