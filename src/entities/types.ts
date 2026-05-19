@@ -174,6 +174,7 @@ export interface FavoritePlantsResponse {
   plantId: string;
   plantKoreanName: string;
   plantEnglishName: string;
+  imageUrl?: string;
   size: string;
   airPurification: string;
   manageDifficulty: string;

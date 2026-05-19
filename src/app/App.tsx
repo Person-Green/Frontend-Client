@@ -11,6 +11,7 @@ import MatchingResult from '../pages/Matching/Result';
 import MatchingHistory from '../pages/Matching/History';
 import PlantDetail from '../pages/PlantDetail';
 import Encyclopedia from '../pages/Encyclopedia';
+import MyPlants from '../pages/MyPlants';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/matching" element={<Matching />} />
           <Route path="/encyclopedia" element={<Encyclopedia />} />
+          <Route path="/my-plants" element={<MyPlants />} />
         </Route>
         <Route path="/plants/:plantId" element={<PlantDetail />} />
         <Route path="/auth" element={<AuthFlow />} />
