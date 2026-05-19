@@ -4,9 +4,11 @@ import BottomNav from './bottomNav';
 
 const Layout = () => {
   return (
-    <section>
+    <section className="h-dvh flex flex-col">
       <Header />
-      <Outlet />
+      <div className="flex-1 overflow-y-auto no-scrollbar">
+        <Outlet />
+      </div>
       <BottomNav />
     </section>
   );

@@ -92,7 +92,7 @@ const Encyclopedia = () => {
   }, [activeTab, applied]);
 
   return (
-    <main className="flex flex-col gap-24 p-20 pb-[100px]">
+    <main className="flex flex-col gap-24 p-20">
       <TabBar active={activeTab} onChange={setActiveTab} />
 
       <section className="flex flex-col gap-8">
