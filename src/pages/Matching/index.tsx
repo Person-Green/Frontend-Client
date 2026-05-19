@@ -3,11 +3,26 @@ import Button from '../../shared/ui/button.tsx';
 import Modal from '../../shared/ui/modal.tsx';
 import { useModalStore } from '../../shared/stores/modalStore.ts';
 import Blink from '../../assets/character/blink.svg';
+import { useHeader } from '../../shared/stores/headerStore.ts';
 
 const Matching = () => {
   const navigate = useNavigate();
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
+
+  useHeader('explore', '매칭', {
+    variant: 'highlight',
+    rightSlot: (
+      <button
+        type="button"
+        onClick={() => navigate('/matching/history')}
+        className="flex items-center justify-center p-8 rounded-max"
+        aria-label="매칭 기록"
+      >
+        <span className="icon-l text-text-30">search_activity</span>
+      </button>
+    ),
+  });
 
   const handleStart = () => {
     const saved = localStorage.getItem('matchingSurveyAnswers');

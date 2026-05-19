@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { PlantCatalogItemResponse } from '../../shared/api';
 import { useFilterStore } from '../../shared/stores/filterStore';
+import { useHeader } from '../../shared/stores/headerStore';
 import EncyclopediaCard from './EncyclopediaCard';
 import TabBar, { type EncyclopediaTab } from './TabBar';
 import FilterModal from './FilterModal';
@@ -64,6 +65,8 @@ const Encyclopedia = () => {
   const [activeTab, setActiveTab] = useState<EncyclopediaTab>('all');
   const applied = useFilterStore((s) => s.applied);
   const openFilterModal = useFilterStore((s) => s.openModal);
+
+  useHeader('temp_preferences_eco', '식물도감');
 
   const visiblePlants = useMemo(() => {
     let plants = MOCK_PLANTS;
