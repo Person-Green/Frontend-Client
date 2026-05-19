@@ -1,5 +1,5 @@
-import type { PlantRecommendationResponse } from '../../../../shared/api/types';
-import Img from "../../../../assets/banner/banner1.svg"
+import type { PlantRecommendationResponse } from '../api/types';
+import Img from '../../assets/banner/banner1.svg'
 
 interface ResultPlantProps {
   plant: PlantRecommendationResponse;

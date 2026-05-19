@@ -1,15 +1,22 @@
-interface headerProps {
-  icon: string;
-  children: React.ReactNode;
-}
+import { useHeaderStore } from '../shared/stores/headerStore';
 
-const Header = ({ icon, children } : headerProps) => {
-  return(
-  	<header className="flex items-center gap-6 px-24 h-[3.75rem]">
-			<span className="icon-m text-primary">{icon}</span>
-      <h1 className="title-m text-primary">{children}</h1>
-		</header>
+const Header = () => {
+  const config = useHeaderStore((s) => s.config);
+  if (!config) return null;
+
+  const { icon, title, rightSlot, variant = 'primary' } = config;
+  const colorClass =
+    variant === 'highlight' ? 'text-text-highlight' : 'text-primary';
+
+  return (
+    <header className="flex items-center justify-between pl-24 pr-16 h-[3.75rem]">
+      <div className={`flex items-center gap-6 ${colorClass}`}>
+        <span className="icon-m">{icon}</span>
+        <h1 className="title-m">{title}</h1>
+      </div>
+      {rightSlot}
+    </header>
   );
-}
+};
 
 export default Header;
