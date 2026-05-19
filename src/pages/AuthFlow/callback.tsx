@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginWithGoogle } from '../../shared/api';
+import { loginWithGoogle } from '../../entities';
 
 
 const AuthCallback = () => {

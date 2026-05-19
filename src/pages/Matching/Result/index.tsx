@@ -6,8 +6,8 @@ import Title from '../../../shared/ui/title.tsx';
 import Modal from '../../../shared/ui/modal.tsx';
 import ResultPlant from '../../../shared/ui/ResultPlant.tsx';
 import { useModalStore } from '../../../shared/stores/modalStore.ts';
-import { getRecommendationHistoryById } from '../../../shared/api/history.ts';
-import { recommendPlants } from '../../../shared/api/plants.ts';
+import { getRecommendationHistoryById } from '../../../entities/history.ts';
+import { recommendPlants } from '../../../entities/plants.ts';
 import type {
   CareLevelType,
   ExperienceLevelType,
@@ -18,7 +18,7 @@ import type {
   SunlightLevel,
   TemperatureLevel,
   VentilationLevel,
-} from '../../../shared/api/types.ts';
+} from '../../../entities/types.ts';
 import type { SurveyAnswers } from '../Survey/types.ts';
 
 const PLACE_MAP: Record<string, PlacementType> = {

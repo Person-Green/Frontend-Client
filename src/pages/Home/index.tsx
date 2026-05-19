@@ -3,8 +3,8 @@ import PlantItem from '../../shared/ui/plantItem.tsx';
 import { useNavigate } from 'react-router-dom';
 import EatenCharacter from '../../assets/character/eaten.svg';
 import Title from '../../shared/ui/title.tsx';
-import { getPlants } from '../../shared/api';
-import type { PlantCatalogItemResponse } from '../../shared/api';
+import { getPlants } from '../../entities';
+import type { PlantCatalogItemResponse } from '../../entities';
 import { useHeader } from '../../shared/stores/headerStore.ts';
 import Banner from '../../widgets/banner.tsx';
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getPlantById, addFavorite, removeFavorite } from '../../shared/api';
+import { getPlantById, addFavorite, removeFavorite } from '../../entities';
 import type {
   PlantCatalogItemResponse,
   PlantDetailResponse,
-} from '../../shared/api';
+} from '../../entities';
 import Button from '../../shared/ui/button';
 
 const catalogToDetail = (
