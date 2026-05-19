@@ -57,8 +57,10 @@ const Home = () => {
         <ul className="flex gap-16 overflow-x-scroll no-scrollbar -mx-20 px-20">
           {plantList.map((item) => (
             <PlantItem
+              key={item.plantId}
               name={item.plantKoreanName}
               description={`${item.size}, ${item.manageDifficulty}`}
+              imageUrl={item.imageUrl}
               onClick={() => navigate(`/plants/${item.plantId}`)}
             />
           ))}
