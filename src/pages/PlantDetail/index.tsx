@@ -7,6 +7,10 @@ import type {
 } from '../../entities';
 import Button from '../../shared/ui/button';
 import NonePlantImage from '../../assets/plants/none.svg';
+import {
+  toAirPurificationLabel,
+  toDifficultyLabel,
+} from '../../shared/lib/plantLabels';
 
 const catalogToDetail = (
   item: PlantCatalogItemResponse,
@@ -28,13 +32,6 @@ const catalogToDetail = (
   description: '',
 });
 
-const difficultyLabel: Record<string, string> = {
-  VERY_EASY: '관리쉬움',
-  EASY: '관리쉬움',
-  NORMAL: '보통',
-  HARD: '어려움',
-};
-
 const PlantDetail = () => {
   const { plantId } = useParams<{ plantId: string }>();
   const navigate = useNavigate();
@@ -54,11 +51,13 @@ const PlantDetail = () => {
 
   useEffect(() => {
     if (!plantId) return;
-    if (passedPlant && passedPlant.plantId === plantId) return;
-    setLoading(true);
+    const hasPassed = passedPlant && passedPlant.plantId === plantId;
+    if (!hasPassed) setLoading(true);
     getPlantById(plantId)
       .then((res) => setPlant(res))
-      .catch(() => setError(true))
+      .catch(() => {
+        if (!hasPassed) setError(true);
+      })
       .finally(() => setLoading(false));
   }, [plantId]);
 
@@ -147,7 +146,7 @@ const PlantDetail = () => {
               <div className="flex items-center gap-4 shrink-0">
                 <span className="icon-xs text-primary">verified_user</span>
                 <span className="label-s text-text-20">
-                  {difficultyLabel[plant.manageDifficulty] ?? plant.manageDifficulty}
+                  {toDifficultyLabel(plant.manageDifficulty)}
                 </span>
               </div>
             </div>
