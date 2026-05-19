@@ -1,75 +1,34 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getPlants } from '../../entities';
 import type { PlantCatalogItemResponse } from '../../entities';
 import { useFilterStore } from '../../shared/stores/filterStore';
 import { useHeader } from '../../shared/stores/headerStore';
+import {
+  toAirPurificationLabel,
+  toDifficultyShort,
+} from '../../shared/lib/plantLabels';
 import EncyclopediaCard from './EncyclopediaCard';
 import TabBar, { type EncyclopediaTab } from './TabBar';
 import FilterModal from './FilterModal';
 
-const MOCK_PLANTS: PlantCatalogItemResponse[] = [
-  {
-    plantId: '1',
-    plantKoreanName: '스투키',
-    plantEnglishName: 'Stucky',
-    size: '중형',
-    airPurification: '높음',
-    manageDifficulty: '쉬움',
-    isFavorite: false,
-    favoriteCount: 107,
-  },
-  {
-    plantId: '2',
-    plantKoreanName: '스투키',
-    plantEnglishName: 'Stucky',
-    size: '중형',
-    airPurification: '높음',
-    manageDifficulty: '쉬움',
-    isFavorite: true,
-    favoriteCount: 94000,
-  },
-  {
-    plantId: '3',
-    plantKoreanName: '스투키',
-    plantEnglishName: 'Stucky',
-    size: '중형',
-    airPurification: '높음',
-    manageDifficulty: '쉬움',
-    isFavorite: false,
-    favoriteCount: 9000,
-  },
-  {
-    plantId: '4',
-    plantKoreanName: '스투키',
-    plantEnglishName: 'Stucky',
-    size: '중형',
-    airPurification: '높음',
-    manageDifficulty: '쉬움',
-    isFavorite: false,
-    favoriteCount: 62,
-  },
-  {
-    plantId: '5',
-    plantKoreanName: '스투키',
-    plantEnglishName: 'Stucky',
-    size: '중형',
-    airPurification: '높음',
-    manageDifficulty: '쉬움',
-    isFavorite: true,
-    favoriteCount: 320,
-  },
-];
-
 const Encyclopedia = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<EncyclopediaTab>('all');
+  const [plantList, setPlantList] = useState<PlantCatalogItemResponse[]>([]);
   const applied = useFilterStore((s) => s.applied);
   const openFilterModal = useFilterStore((s) => s.openModal);
 
   useHeader('temp_preferences_eco', '식물도감');
 
+  useEffect(() => {
+    getPlants({ size: 50 })
+      .then((res) => setPlantList(res.plants))
+      .catch((e) => console.error('식물도감 로딩 실패', e));
+  }, []);
+
   const visiblePlants = useMemo(() => {
-    let plants = MOCK_PLANTS;
+    let plants = plantList;
     if (activeTab === 'popular') {
       plants = [...plants].sort((a, b) => b.favoriteCount - a.favoriteCount);
     } else if (activeTab === 'favorites') {
@@ -77,19 +36,19 @@ const Encyclopedia = () => {
     }
     if (applied.manageDifficulty) {
       plants = plants.filter(
-        (p) => p.manageDifficulty === applied.manageDifficulty,
+        (p) => toDifficultyShort(p.manageDifficulty) === applied.manageDifficulty,
       );
     }
     if (applied.airPurification) {
       plants = plants.filter(
-        (p) => p.airPurification === applied.airPurification,
+        (p) => toAirPurificationLabel(p.airPurification) === applied.airPurification,
       );
     }
     if (applied.plantSize) {
       plants = plants.filter((p) => p.size === applied.plantSize);
     }
     return plants;
-  }, [activeTab, applied]);
+  }, [activeTab, applied, plantList]);
 
   return (
     <main className="flex flex-col gap-24 p-20">

@@ -137,6 +137,7 @@ export interface PlantCatalogItemResponse {
   plantId: string;
   plantKoreanName: string;
   plantEnglishName: string;
+  imageUrl?: string;
   size: string;
   airPurification: string;
   manageDifficulty: string;
@@ -154,6 +155,7 @@ export interface PlantDetailResponse {
   plantId: string;
   plantKoreanName: string;
   plantEnglishName: string;
+  imageUrl?: string;
   manageDifficulty: string;
   waterPeriod: string;
   appropriateTemperature: string;

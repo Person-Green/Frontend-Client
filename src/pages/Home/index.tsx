@@ -7,6 +7,7 @@ import { getPlants } from '../../entities';
 import type { PlantCatalogItemResponse } from '../../entities';
 import { useHeader } from '../../shared/stores/headerStore.ts';
 import Banner from '../../widgets/banner.tsx';
+import { toDifficultyLabel } from '../../shared/lib/plantLabels.ts';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -50,15 +51,17 @@ const Home = () => {
       <article className="flex flex-col gap-12 pb-20 ">
         <div className="flex justify-between items-center">
           <Title icon="nest_eco_leaf" title="인기식물" />
-          <span className="py-6 px-12 rounded-max label-s bg-surface-20 text-text-20">
+          <span className="py-6 px-12 rounded-max label-s bg-surface-20 text-text-20" onClick={() => navigate('/encyclopedia')}>
             전체보기
           </span>
         </div>
         <ul className="flex gap-16 overflow-x-scroll no-scrollbar -mx-20 px-20">
           {plantList.map((item) => (
             <PlantItem
+              key={item.plantId}
               name={item.plantKoreanName}
-              description={`${item.size}, ${item.manageDifficulty}`}
+              description={`${item.size}, ${toDifficultyLabel(item.manageDifficulty)}`}
+              imageUrl={item.imageUrl}
               onClick={() => navigate(`/plants/${item.plantId}`)}
             />
           ))}

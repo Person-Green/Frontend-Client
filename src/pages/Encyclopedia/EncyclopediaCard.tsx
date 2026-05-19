@@ -1,5 +1,9 @@
 import type { PlantCatalogItemResponse } from '../../entities';
-import Img from '../../assets/banner/banner1.svg';
+import NonePlantImage from '../../assets/plants/none.svg';
+import {
+  toAirPurificationLabel,
+  toDifficultyShort,
+} from '../../shared/lib/plantLabels';
 
 interface EncyclopediaCardProps {
   plant: PlantCatalogItemResponse;
@@ -18,16 +22,19 @@ const formatFavoriteCount = (count: number): string => {
 };
 
 const EncyclopediaCard = ({ plant, onClick }: EncyclopediaCardProps) => {
+  const imageSrc =
+    plant.imageUrl && plant.imageUrl.trim() !== ''
+      ? plant.imageUrl
+      : NonePlantImage;
   return (
     <li
       onClick={onClick}
       className="flex flex-col gap-12 cursor-pointer min-w-0"
     >
-      <div className="relative w-full aspect-square rounded-8 bg-[#EEF2E6] overflow-hidden flex items-end justify-center">
-        <div className="w-[80%] h-[80%] flex items-center justify-center">
-          <img src={Img} alt={plant.plantKoreanName} />
-        </div>
-      </div>
+      <div
+        className="relative w-full aspect-square rounded-8 bg-[#EEF2E6] overflow-hidden bg-center bg-no-repeat bg-cover"
+        style={{ backgroundImage: `url(${imageSrc})` }}
+      />
 
       <div className="flex flex-col gap-6">
         <p className="body-m">
@@ -38,7 +45,7 @@ const EncyclopediaCard = ({ plant, onClick }: EncyclopediaCardProps) => {
         </p>
 
         <p className="label-s text-text-30 line-clamp-2">
-          {`관리 ${plant.manageDifficulty}, ${plant.size}, 공기정화 ${plant.airPurification}`}
+          {`관리 ${toDifficultyShort(plant.manageDifficulty)}, ${plant.size}, 공기정화 ${toAirPurificationLabel(plant.airPurification)}`}
         </p>
 
         <div className="flex items-center">
