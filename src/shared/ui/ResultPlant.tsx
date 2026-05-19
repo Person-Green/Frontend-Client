@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import type { PlantRecommendationResponse } from '../../entities';
 import NonePlant from '../../assets/plants/none.svg';
 
@@ -7,11 +8,24 @@ interface ResultPlantProps {
 }
 
 const ResultPlant = ({ plant }: ResultPlantProps) => {
+  const navigate = useNavigate();
+
   return (
-    <li className="flex flex-col gap-12 cursor-pointer">
+    <li
+      className="flex flex-col gap-12 cursor-pointer"
+      onClick={() => navigate(`/plants/${plant.plantId}`)}
+    >
       {/* 이미지 영역 */}
       <div className="relative w-full aspect-square rounded-14 bg-[#EEF2E6] overflow-hidden flex items-center justify-center">
-        <img src={NonePlant} alt="" className="w-full h-full object-contain" />
+        {plant.imageUrl ? (
+          <img
+            src={plant.imageUrl}
+            alt={plant.plantName}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <img src={NonePlant} alt="" className="w-full h-full object-contain" />
+        )}
       </div>
 
       {/* 텍스트 영역 */}

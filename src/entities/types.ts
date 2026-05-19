@@ -96,6 +96,7 @@ export interface PlantRecommendationResponse {
   plantId: string;
   plantName: string;
   plantEnglishName: string;
+  imageUrl: string | null;
   score: number;
   reasons: string[];
   cautions: string[];
