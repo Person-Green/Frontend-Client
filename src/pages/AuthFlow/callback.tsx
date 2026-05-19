@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginWithGoogle } from '../../shared/api';
+import { loginWithGoogle } from '../../entities';
 
 
 const AuthCallback = () => {
@@ -19,8 +19,9 @@ const AuthCallback = () => {
 
     loginWithGoogle({ authorizationCode, state, redirectUri })
       .then((res) => {
-        // 이름이 없으면 이름 입력 페이지로, 있으면 홈으로
-        if (!res.user.name) {
+        const hasSetUsername =
+          localStorage.getItem(`hasSetUsername:${res.user.id}`) === 'true';
+        if (!hasSetUsername) {
           navigate('/auth/enter-name', { replace: true });
         } else {
           navigate('/', { replace: true });

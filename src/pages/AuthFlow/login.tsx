@@ -1,7 +1,7 @@
 import Button from '../../shared/ui/button.tsx';
 import AllPlant from '../../assets/plants/allPlant.svg';
 import Google from '../../assets/icon/google.svg';
-import { getGoogleAuthorizationUrl } from '../../shared/api';
+import { getGoogleAuthorizationUrl } from '../../entities';
 
 interface LoginProps {
   onGoogleLogin?: () => void;
