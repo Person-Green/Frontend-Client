@@ -1,8 +1,30 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getPlantById, addFavorite, removeFavorite } from '../../shared/api';
-import type { PlantDetailResponse } from '../../shared/api';
+import type {
+  PlantCatalogItemResponse,
+  PlantDetailResponse,
+} from '../../shared/api';
 import Button from '../../shared/ui/button';
+
+const catalogToDetail = (
+  item: PlantCatalogItemResponse,
+): PlantDetailResponse => ({
+  plantId: item.plantId,
+  plantKoreanName: item.plantKoreanName,
+  plantEnglishName: item.plantEnglishName,
+  manageDifficulty: item.manageDifficulty,
+  size: item.size,
+  airPurification: item.airPurification,
+  isFavorite: item.isFavorite,
+  waterPeriod: '',
+  appropriateTemperature: '',
+  appropriateHumidity: '',
+  sunlightRequirements: '',
+  recommendedIndoorLocation: '',
+  petSafety: '',
+  description: '',
+});
 
 const difficultyLabel: Record<string, string> = {
   VERY_EASY: '관리쉬움',
@@ -14,12 +36,23 @@ const difficultyLabel: Record<string, string> = {
 const PlantDetail = () => {
   const { plantId } = useParams<{ plantId: string }>();
   const navigate = useNavigate();
-  const [plant, setPlant] = useState<PlantDetailResponse | null>(null);
-  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const passedPlant = (
+    location.state as { plant?: PlantCatalogItemResponse } | null
+  )?.plant;
+  const [plant, setPlant] = useState<PlantDetailResponse | null>(
+    passedPlant && passedPlant.plantId === plantId
+      ? catalogToDetail(passedPlant)
+      : null,
+  );
+  const [loading, setLoading] = useState(
+    !(passedPlant && passedPlant.plantId === plantId),
+  );
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (!plantId) return;
+    if (passedPlant && passedPlant.plantId === plantId) return;
     setLoading(true);
     getPlantById(plantId)
       .then((res) => setPlant(res))

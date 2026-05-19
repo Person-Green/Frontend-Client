@@ -3,11 +3,26 @@ import Button from '../../shared/ui/button.tsx';
 import Modal from '../../shared/ui/modal.tsx';
 import { useModalStore } from '../../shared/stores/modalStore.ts';
 import Blink from '../../assets/character/blink.svg';
+import { useHeader } from '../../shared/stores/headerStore.ts';
 
 const Matching = () => {
   const navigate = useNavigate();
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
+
+  useHeader('explore', '매칭', {
+    variant: 'highlight',
+    rightSlot: (
+      <button
+        type="button"
+        onClick={() => navigate('/matching/history')}
+        className="flex items-center justify-center p-8 rounded-max"
+        aria-label="매칭 기록"
+      >
+        <span className="icon-l text-text-30">search_activity</span>
+      </button>
+    ),
+  });
 
   const handleStart = () => {
     const saved = localStorage.getItem('matchingSurveyAnswers');
@@ -41,7 +56,7 @@ const Matching = () => {
   };
 
   return (
-    <main className="h-[calc(100vh-60px)] flex flex-col p-20 pb-[96px]">
+    <main className="h-full flex flex-col p-20">
       <article className="h-full flex flex-col justify-center items-center gap-24">
         <object type="image/svg+xml" data={Blink} width={161} height={200} />
         <div className="flex flex-col gap-8 py-12">
