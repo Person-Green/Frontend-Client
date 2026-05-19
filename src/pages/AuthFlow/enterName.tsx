@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../shared/ui/button.tsx';
+import { updateUsername } from '../../entities';
 
 const EnterName = () => {
   const navigate = useNavigate();
@@ -37,7 +39,8 @@ const EnterName = () => {
     setError(false);
     setIsLoading(true);
     try {
-      await updateUsername({ username: name.trim() });
+      const user = await updateUsername({ username: name.trim() });
+      localStorage.setItem(`hasSetUsername:${user.id}`, 'true');
       navigate('/', { replace: true });
     } catch (e) {
       console.error('이름 저장 실패', e);

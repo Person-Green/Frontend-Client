@@ -1,5 +1,5 @@
-import type { PlantRecommendationResponse } from '../api/types';
-import Img from '../../assets/banner/banner1.svg'
+import type { PlantRecommendationResponse } from '../../entities';
+import NonePlant from '../../assets/plants/none.svg';
 
 interface ResultPlantProps {
   plant: PlantRecommendationResponse;
@@ -10,10 +10,8 @@ const ResultPlant = ({ plant }: ResultPlantProps) => {
   return (
     <li className="flex flex-col gap-12 cursor-pointer">
       {/* 이미지 영역 */}
-      <div className="relative w-full aspect-square rounded-14 bg-[#EEF2E6] overflow-hidden flex items-end justify-center">
-        <div className="w-[80%] h-[80%] flex items-center justify-center">
-            <img src={Img} />
-        </div>
+      <div className="relative w-full aspect-square rounded-14 bg-[#EEF2E6] overflow-hidden flex items-center justify-center">
+        <img src={NonePlant} alt="" className="w-full h-full object-contain" />
       </div>
 
       {/* 텍스트 영역 */}

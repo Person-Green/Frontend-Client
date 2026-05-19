@@ -1,4 +1,4 @@
-import type { PlantCatalogItemResponse } from '../../shared/api';
+import type { PlantCatalogItemResponse } from '../../entities';
 import Img from '../../assets/banner/banner1.svg';
 
 interface EncyclopediaCardProps {

@@ -1,4 +1,4 @@
-export { default as axiosInstance } from './axiosInstance';
+export { default as axiosInstance } from '../shared/api/axiosInstance';
 
 export * from './auth';
 export * from './plants';
