@@ -11,7 +11,7 @@ const BottomNav = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 flex h-fit w-dvw bg-surface-10 px-12 border-t border-t-stroke-10">
+    <nav className="flex h-fit w-full shrink-0 bg-surface-10 px-12 border-t border-t-stroke-10">
       {navItems.map((item) => {
         const isActive = location.pathname === item.path;
         return (

@@ -6,6 +6,7 @@ import Title from '../../shared/ui/title.tsx';
 import { getPlants } from '../../shared/api';
 import type { PlantCatalogItemResponse } from '../../shared/api';
 import { useHeader } from '../../shared/stores/headerStore.ts';
+import Banner from '../../widgets/banner.tsx';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Home = () => {
   }, []);
   return (
     <main className="flex flex-col gap-24 p-20">
+      <Banner/>
       {/*맞춤 식물 큐레이션*/}
       <article className="flex flex-col gap-16 p-16 bg-surface-20 rounded-8">
         <figure className="flex flex-col gap-6 p-8">
@@ -36,10 +38,10 @@ const Home = () => {
           </div>
         </figure>
         <div className="flex gap-8">
-          <button className=" body-s !font-[500] w-full px-16 py-12 rounded-max bg-primary text-text-on-primary">
+          <button className=" body-s !font-[500] w-full px-16 py-12 rounded-max bg-primary text-text-on-primary" onClick={() => navigate('/matching')}>
             매칭받기
           </button>
-          <button className="w-full px-16 py-12 rounded-max bg-surface-30 text-text-20">
+          <button className="w-full px-16 py-12 rounded-max bg-surface-30 text-text-20" onClick={() => navigate('/encyclopedia')}>
             식물 알아보기
           </button>
         </div>

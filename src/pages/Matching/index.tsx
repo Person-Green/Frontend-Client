@@ -56,7 +56,7 @@ const Matching = () => {
   };
 
   return (
-    <main className="h-[calc(100vh-60px)] flex flex-col p-20 pb-[96px]">
+    <main className="h-full flex flex-col p-20">
       <article className="h-full flex flex-col justify-center items-center gap-24">
         <object type="image/svg+xml" data={Blink} width={161} height={200} />
         <div className="flex flex-col gap-8 py-12">
