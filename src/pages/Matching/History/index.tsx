@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import DetailHeader from '../../../widgets/detailHeader.tsx';
 import Title from '../../../shared/ui/title.tsx';
 import HistoryItem from './component/HistoryItem.tsx';
-import { getRecommendationHistories } from '../../../shared/api/history.ts';
-import type { RecommendationHistoryItem } from '../../../shared/api/types.ts';
+import { getRecommendationHistories } from '../../../entities/history.ts';
+import type { RecommendationHistoryItem } from '../../../entities/types.ts';
 
 const PAGE_SIZE = 20;
 

@@ -1,4 +1,4 @@
-import type { PlantRecommendationResponse } from '../api/types';
+import type { PlantRecommendationResponse } from '../../entities';
 import NonePlant from '../../assets/plants/none.svg';
 
 interface ResultPlantProps {

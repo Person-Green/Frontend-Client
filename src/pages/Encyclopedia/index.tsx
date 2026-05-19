@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { PlantCatalogItemResponse } from '../../shared/api';
+import type { PlantCatalogItemResponse } from '../../entities';
 import { useFilterStore } from '../../shared/stores/filterStore';
 import { useHeader } from '../../shared/stores/headerStore';
 import EncyclopediaCard from './EncyclopediaCard';

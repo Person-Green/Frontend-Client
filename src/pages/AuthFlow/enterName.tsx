@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../shared/ui/button.tsx';
-import { updateUsername } from '../../shared/api';
+import { updateUsername } from '../../entities';
 
 const EnterName = () => {
   const navigate = useNavigate();
