@@ -5,10 +5,13 @@ import EatenCharacter from '../../assets/character/eaten.svg';
 import Title from '../../shared/ui/title.tsx';
 import { getPlants } from '../../shared/api';
 import type { PlantCatalogItemResponse } from '../../shared/api';
+import { useHeader } from '../../shared/stores/headerStore.ts';
 
 const Home = () => {
   const navigate = useNavigate();
   const [plantList, setPlantList] = useState<PlantCatalogItemResponse[]>([]);
+
+  useHeader('park', '정원');
 
   useEffect(() => {
     getPlants({ sort: 'LIKE_DESC', size: 10 })
