@@ -155,6 +155,7 @@ export interface PlantDetailResponse {
   plantId: string;
   plantKoreanName: string;
   plantEnglishName: string;
+  imageUrl?: string;
   manageDifficulty: string;
   waterPeriod: string;
   appropriateTemperature: string;

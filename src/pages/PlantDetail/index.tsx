@@ -6,6 +6,7 @@ import type {
   PlantDetailResponse,
 } from '../../entities';
 import Button from '../../shared/ui/button';
+import NonePlantImage from '../../assets/plants/none.svg';
 
 const catalogToDetail = (
   item: PlantCatalogItemResponse,
@@ -13,6 +14,7 @@ const catalogToDetail = (
   plantId: item.plantId,
   plantKoreanName: item.plantKoreanName,
   plantEnglishName: item.plantEnglishName,
+  imageUrl: item.imageUrl,
   manageDifficulty: item.manageDifficulty,
   size: item.size,
   airPurification: item.airPurification,
@@ -106,8 +108,12 @@ const PlantDetail = () => {
       <div className="flex flex-col flex-1 overflow-hidden">
         <div className="flex flex-col gap-12 overflow-y-auto no-scrollbar flex-1 px-20 py-4">
           {/* 식물 이미지 */}
-          <div className="relative w-full aspect-square bg-surface-20 rounded-14 flex items-center justify-center overflow-hidden">
-            <span className="icon-l text-text-30 text-[80px]">potted_plant</span>
+          <div
+            className="relative w-full aspect-square bg-surface-20 rounded-14 flex items-center justify-center overflow-hidden bg-center bg-no-repeat bg-cover"
+            style={{
+              backgroundImage: `url(${plant.imageUrl && plant.imageUrl.trim() !== '' ? plant.imageUrl : NonePlantImage})`,
+            }}
+          >
             {/* 즐겨찾기 버튼 */}
             <button
               onClick={handleFavorite}
