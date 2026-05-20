@@ -1,0 +1,38 @@
+import type { PlantRecommendationResponse } from '../../entities';
+import NonePlant from '../../assets/plants/none.svg';
+
+interface ResultPlantProps {
+  plant: PlantRecommendationResponse;
+  rank?: number;
+}
+
+const ResultPlant = ({ plant }: ResultPlantProps) => {
+  return (
+    <li className="flex flex-col gap-12 cursor-pointer">
+      {/* 이미지 영역 */}
+      <div className="relative w-full aspect-square rounded-14 bg-[#EEF2E6] overflow-hidden flex items-center justify-center">
+        <img src={NonePlant} alt="" className="w-full h-full object-contain" />
+      </div>
+
+      {/* 텍스트 영역 */}
+      <div className="flex flex-col gap-4">
+        {/* 이름 */}
+        <p className="body-m">
+          <span className="font-bold text-text-10">{plant.plantName}</span>
+          <span className="font-normal text-text-20">({plant.plantEnglishName})</span>
+        </p>
+
+        {/* 설명 */}
+        <p className="label-s text-text-30 line-clamp-2">{plant.description}</p>
+
+        {/* 좋아요 */}
+        <div className="flex items-center gap-4 mt-2">
+          <span className="icon-xs-fill text-primary">favorite</span>
+          <span className="label-s text-text-30">{plant.score}</span>
+        </div>
+      </div>
+    </li>
+  );
+};
+
+export default ResultPlant;
