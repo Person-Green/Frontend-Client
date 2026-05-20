@@ -11,6 +11,7 @@ import {
   toAirPurificationLabel,
   toDifficultyLabel,
 } from '../../shared/lib/plantLabels';
+import Kakao from '../../assets/icon/kakao.svg';
 
 const catalogToDetail = (
   item: PlantCatalogItemResponse,
@@ -173,8 +174,11 @@ const PlantDetail = () => {
         </div>
 
         {/* 하단 고정 버튼 */}
-        <div className="px-20 py-20 shrink-0">
+        <div className="px-20 py-20 shrink-0 flex gap-8">
           <Button icon="shopping_cart">구매하기</Button>
+          <button className="p-16 rounded-14 bg-primary">
+            <img src={Kakao} alt="카카오톡 공유"/>
+          </button>
         </div>
       </div>
     </main>
