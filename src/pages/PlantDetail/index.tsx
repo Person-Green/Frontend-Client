@@ -7,10 +7,53 @@ import type {
 } from '../../entities';
 import Button from '../../shared/ui/button';
 import NonePlantImage from '../../assets/plants/none.svg';
-import {
-  toAirPurificationLabel,
-  toDifficultyLabel,
-} from '../../shared/lib/plantLabels';
+import { toDifficultyLabel } from '../../shared/lib/plantLabels';
+import Kakao from '../../assets/icon/kakao.svg';
+
+declare global {
+  interface Window {
+    Kakao: {
+      isInitialized: () => boolean;
+      init: (key: string) => void;
+      Share: {
+        sendDefault: (options: {
+          objectType: string;
+          content: {
+            title: string;
+            description?: string;
+            imageUrl?: string;
+            link: { mobileWebUrl: string; webUrl: string };
+          };
+          buttons?: Array<{
+            title: string;
+            link: { mobileWebUrl: string; webUrl: string };
+          }>;
+        }) => void;
+      };
+    };
+  }
+}
+
+const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_API_KEY as string;
+
+const loadKakaoSDK = (): Promise<void> =>
+  new Promise((resolve, reject) => {
+    if (window.Kakao) {
+      if (!window.Kakao.isInitialized()) {
+        window.Kakao.init(KAKAO_JS_KEY);
+      }
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js';
+    script.onload = () => {
+      window.Kakao.init(KAKAO_JS_KEY);
+      resolve();
+    };
+    script.onerror = () => reject(new Error('카카오 SDK 로드 실패'));
+    document.head.appendChild(script);
+  });
 
 const catalogToDetail = (
   item: PlantCatalogItemResponse,
@@ -72,6 +115,36 @@ const PlantDetail = () => {
       setPlant((prev) => prev ? { ...prev, isFavorite: !prev.isFavorite } : prev);
     } catch (e) {
       console.error('즐겨찾기 처리 실패', e);
+    }
+  };
+
+  const handleKakaoShare = async () => {
+    if (!plant) return;
+    try {
+      await loadKakaoSDK();
+      window.Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: `${plant.plantKoreanName} (${plant.plantEnglishName})`,
+          description: plant.description || `난이도: ${toDifficultyLabel(plant.manageDifficulty)}`,
+          imageUrl: plant.imageUrl?.trim() || undefined,
+          link: {
+            mobileWebUrl: window.location.href,
+            webUrl: window.location.href,
+          },
+        },
+        buttons: [
+          {
+            title: '식물 자세히 보기',
+            link: {
+              mobileWebUrl: window.location.href,
+              webUrl: window.location.href,
+            },
+          },
+        ],
+      });
+    } catch (e) {
+      console.error('카카오 공유 실패', e);
     }
   };
 
@@ -173,8 +246,11 @@ const PlantDetail = () => {
         </div>
 
         {/* 하단 고정 버튼 */}
-        <div className="px-20 py-20 shrink-0">
+        <div className="px-20 py-20 shrink-0 flex gap-8">
           <Button icon="shopping_cart">구매하기</Button>
+          <button className="p-16 rounded-14 bg-primary" onClick={handleKakaoShare}>
+            <img src={Kakao} alt="카카오톡 공유"/>
+          </button>
         </div>
       </div>
     </main>

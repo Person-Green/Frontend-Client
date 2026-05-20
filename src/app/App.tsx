@@ -3,6 +3,7 @@ import Layout from '../widgets/layout';
 import NotFound from '../pages/AuthFlow/notfound.tsx';
 import AuthFlow from '../pages/AuthFlow';
 import AuthCallback from '../pages/AuthFlow/callback.tsx';
+import KakaoCallback from '../pages/AuthFlow/kakaoCallback.tsx';
 import EnterName from '../pages/AuthFlow/enterName.tsx';
 import Home from '../pages/Home';
 import Matching from '../pages/Matching';
@@ -11,6 +12,7 @@ import MatchingResult from '../pages/Matching/Result';
 import MatchingHistory from '../pages/Matching/History';
 import PlantDetail from '../pages/PlantDetail';
 import Encyclopedia from '../pages/Encyclopedia';
+import MyPlants from '../pages/MyPlants';
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/matching" element={<Matching />} />
           <Route path="/encyclopedia" element={<Encyclopedia />} />
+          <Route path="/my-plants" element={<MyPlants />} />
         </Route>
         <Route path="/plants/:plantId" element={<PlantDetail />} />
         <Route path="/auth" element={<AuthFlow />} />
@@ -27,6 +30,7 @@ function App() {
         <Route path="/matching/result" element={<MatchingResult />} />
         <Route path="/matching/history" element={<MatchingHistory />} />
         <Route path="/auth/google/callback" element={<AuthCallback />} />
+        <Route path="/kakao/callback" element={<KakaoCallback />} />
         <Route path="/auth/enter-name" element={<EnterName />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
