@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Layout from '../widgets/layout';
 import NotFound from '../pages/AuthFlow/notfound.tsx';
-import AuthFlow from '../pages/AuthFlow';
+import AuthFlow from '../pages/AuthFlow/index.tsx';
 import AuthCallback from '../pages/AuthFlow/callback.tsx';
 import KakaoCallback from '../pages/AuthFlow/kakaoCallback.tsx';
 import EnterName from '../pages/AuthFlow/enterName.tsx';
