@@ -124,6 +124,8 @@ const PlantDetail = () => {
     try {
       await loadKakaoSDK();
       const shareUrl = `${FRONTEND_URL}${window.location.pathname}`;
+      console.log('VITE_FRONTEND_URL:', import.meta.env.VITE_FRONTEND_URL);
+      console.log('shareUrl:', shareUrl);
       window.Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
