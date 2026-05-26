@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginWithGoogle } from '../../entities';
+import { consumeReturnTo } from '../../app/RequireAuth';
 
 
 const AuthCallback = () => {
@@ -24,7 +25,7 @@ const AuthCallback = () => {
         if (!hasSetUsername) {
           navigate('/auth/enter-name', { replace: true });
         } else {
-          navigate('/', { replace: true });
+          navigate(consumeReturnTo(), { replace: true });
         }
       })
       .catch(() => {
