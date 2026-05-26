@@ -113,9 +113,10 @@ const PlantDetail = () => {
       await loadKakaoSDK();
       const shareUrl = `${FRONTEND_URL}${window.location.pathname}`;
       window.Kakao.Share.sendCustom({
-        templateId: 133598,
+        templateId: 133611,
         templateArgs: {
           shareUrl,
+          img: plant.imageUrl?.trim() || '',
         },
       });
     } catch (e) {
