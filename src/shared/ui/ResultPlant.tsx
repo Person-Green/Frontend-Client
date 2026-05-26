@@ -42,7 +42,7 @@ const ResultPlant = ({ plant }: ResultPlantProps) => {
         {/* 좋아요 */}
         <div className="flex items-center gap-4 mt-2">
           <span className="icon-xs-fill text-primary">favorite</span>
-          <span className="label-s text-text-30">{plant.score}</span>
+          <span className="label-s text-text-30">{plant.favoriteCount}</span>
         </div>
       </div>
     </li>
