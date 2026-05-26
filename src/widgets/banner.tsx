@@ -16,10 +16,10 @@ const Banner = () => {
   }, [])
 
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="relative -mx-20 overflow-hidden">
       <div
         className="flex transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${current * 100}%)` }} 
+        style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {images.map((src, i) => (
           <img
