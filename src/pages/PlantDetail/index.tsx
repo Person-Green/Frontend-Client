@@ -35,6 +35,7 @@ declare global {
 }
 
 const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_API_KEY as string;
+const BASE_URL = (import.meta.env.VITE_BASE_URL as string)?.replace(/\/$/, '') || window.location.origin;
 
 const loadKakaoSDK = (): Promise<void> =>
   new Promise((resolve, reject) => {
@@ -122,6 +123,7 @@ const PlantDetail = () => {
     if (!plant) return;
     try {
       await loadKakaoSDK();
+      const shareUrl = `${BASE_URL}${window.location.pathname}`;
       window.Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
@@ -129,16 +131,16 @@ const PlantDetail = () => {
           description: plant.description || `난이도: ${toDifficultyLabel(plant.manageDifficulty)}`,
           imageUrl: plant.imageUrl?.trim() || undefined,
           link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href,
+            mobileWebUrl: shareUrl,
+            webUrl: shareUrl,
           },
         },
         buttons: [
           {
             title: '식물 자세히 보기',
             link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
+              mobileWebUrl: shareUrl,
+              webUrl: shareUrl,
             },
           },
         ],
