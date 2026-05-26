@@ -110,7 +110,7 @@ const PlantDetail = () => {
     if (!plant) return;
     try {
       await loadKakaoSDK();
-      const shareUrl = `https://people-green.vercel.app${window.location.pathname}`;
+      const shareUrl = `https://people-green.vercel.app/plant/${plantId}`;
       window.Kakao.Share.sendCustom({
         templateId: 133611,
         templateArgs: {
