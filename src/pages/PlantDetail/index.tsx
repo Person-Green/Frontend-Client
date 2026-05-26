@@ -23,7 +23,6 @@ declare global {
 }
 
 const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_API_KEY as string;
-const FRONTEND_URL = 'https://people-green.vercel.app';
 
 const loadKakaoSDK = (): Promise<void> =>
   new Promise((resolve, reject) => {
@@ -111,7 +110,7 @@ const PlantDetail = () => {
     if (!plant) return;
     try {
       await loadKakaoSDK();
-      const shareUrl = `${FRONTEND_URL}${window.location.pathname}`;
+      const shareUrl = window.location.href;
       window.Kakao.Share.sendCustom({
         templateId: 133611,
         templateArgs: {
