@@ -5,11 +5,13 @@ import Title from '../../../shared/ui/title.tsx';
 import HistoryItem from './component/HistoryItem.tsx';
 import { getRecommendationHistories } from '../../../entities/history.ts';
 import type { RecommendationHistoryItem } from '../../../entities/types.ts';
+import { useBackOrHome } from '../../../shared/lib/useBackOrHome.ts';
 
 const PAGE_SIZE = 20;
 
 const MatchingHistory = () => {
   const navigate = useNavigate();
+  const goBack = useBackOrHome();
   const [items, setItems] = useState<RecommendationHistoryItem[]>([]);
   const [cursor, setCursor] = useState<number | undefined>(undefined);
   const [hasNext, setHasNext] = useState(true);
@@ -59,7 +61,7 @@ const MatchingHistory = () => {
 
   return (
     <main className="min-h-screen flex flex-col">
-      <DetailHeader onBack={() => navigate(-1)}>매칭기록</DetailHeader>
+      <DetailHeader onBack={goBack}>매칭기록</DetailHeader>
       <section className="flex flex-1 flex-col gap-24 p-20">
         <div className="flex flex-1 flex-col gap-16 py-16">
           <Title icon="search_activity" title="기록" />

@@ -30,6 +30,8 @@ const MatchingSurvey = () => {
   const [answers, setAnswers] = useState<SurveyAnswers>(initial.answers);
   const answersRef = useRef(answers);
   answersRef.current = answers;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSubmittingRef = useRef(false);
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
@@ -77,6 +79,11 @@ const MatchingSurvey = () => {
     };
   }, []);
 
+  useEffect(() => {
+    isSubmittingRef.current = false;
+    setIsSubmitting(false);
+  }, [step]);
+
   const total = QUESTIONS.length;
   const isFirst = step === 0;
   const isLast = step === total - 1;
@@ -85,6 +92,9 @@ const MatchingSurvey = () => {
   const progressPercent = ((step + 1) / total) * 100;
 
   const handleNext = () => {
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
+    setIsSubmitting(true);
     if (isLast) {
       localStorage.removeItem('matchingSurveyAnswers');
       navigate('/matching/result', { state: { answers } });
@@ -140,7 +150,10 @@ const MatchingSurvey = () => {
           </div>
           )}
           <div className="flex-1">
-            <Button onClick={handleNext} disabled={!current.isReady(answers)}>
+            <Button
+              onClick={handleNext}
+              disabled={!current.isReady(answers) || isSubmitting}
+            >
               다음으로
             </Button>
           </div>

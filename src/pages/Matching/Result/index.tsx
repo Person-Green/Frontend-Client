@@ -8,6 +8,7 @@ import ResultPlant from '../../../shared/ui/ResultPlant.tsx';
 import { useModalStore } from '../../../shared/stores/modalStore.ts';
 import { getRecommendationHistoryById } from '../../../entities/history.ts';
 import { recommendPlants } from '../../../entities/plants.ts';
+import { useBackOrHome } from '../../../shared/lib/useBackOrHome.ts';
 import type {
   CareLevelType,
   ExperienceLevelType,
@@ -115,6 +116,7 @@ type ResultState = {
 const MatchingResult = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const goBack = useBackOrHome();
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
@@ -196,7 +198,7 @@ const MatchingResult = () => {
 
   return (
     <main className="min-h-screen flex flex-col">
-      <DetailHeader onBack={isHistoryView ? () => navigate(-1) : showExitModal}>
+      <DetailHeader onBack={isHistoryView ? goBack : showExitModal}>
         매칭결과
       </DetailHeader>
       <section className="flex flex-1 flex-col gap-24 p-20">
