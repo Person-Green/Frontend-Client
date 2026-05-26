@@ -20,11 +20,10 @@ const AuthCallback = () => {
 
     loginWithGoogle({ authorizationCode, state, redirectUri })
       .then((res) => {
-        const hasSetUsername =
-          localStorage.getItem(`hasSetUsername:${res.user.id}`) === 'true';
-        if (!hasSetUsername) {
+        if (res.firstLogin) {
           navigate('/auth/enter-name', { replace: true });
         } else {
+          localStorage.setItem(`hasSetUsername:${res.user.id}`, 'true');
           navigate(consumeReturnTo(), { replace: true });
         }
       })
