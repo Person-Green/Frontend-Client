@@ -16,8 +16,19 @@ declare global {
       isInitialized: () => boolean;
       init: (key: string) => void;
       Share: {
-        sendDefault: (options: object) => void;
-        sendCustom: (options: { templateId: number; templateArgs?: Record<string, string> }) => void;
+        sendDefault: (options: {
+          objectType: string;
+          content: {
+            title: string;
+            description?: string;
+            imageUrl?: string;
+            link: { mobileWebUrl: string; webUrl: string; androidExecParams?: string; iosExecParams?: string };
+          };
+          buttons?: Array<{
+            title: string;
+            link: { mobileWebUrl: string; webUrl: string; androidExecParams?: string; iosExecParams?: string };
+          }>;
+        }) => void;
       };
     };
   }
@@ -113,14 +124,31 @@ const PlantDetail = () => {
     try {
       await loadKakaoSDK();
       const shareUrl = `${FRONTEND_URL}${window.location.pathname}`;
-      window.Kakao.Share.sendCustom({
-        templateId: 133598,
-        templateArgs: {
+      const execParams = `path=${window.location.pathname}`;
+      window.Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
           title: `${plant.plantKoreanName} (${plant.plantEnglishName})`,
           description: plant.description || `난이도: ${toDifficultyLabel(plant.manageDifficulty)}`,
-          imageUrl: plant.imageUrl?.trim() || '',
-          linkUrl: shareUrl,
+          imageUrl: plant.imageUrl?.trim() || undefined,
+          link: {
+            mobileWebUrl: shareUrl,
+            webUrl: shareUrl,
+            androidExecParams: execParams,
+            iosExecParams: execParams,
+          },
         },
+        buttons: [
+          {
+            title: '식물 자세히 보기',
+            link: {
+              mobileWebUrl: shareUrl,
+              webUrl: shareUrl,
+              androidExecParams: execParams,
+              iosExecParams: execParams,
+            },
+          },
+        ],
       });
     } catch (e) {
       console.error('카카오 공유 실패', e);
