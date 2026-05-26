@@ -21,6 +21,7 @@ export interface UserResponse {
 export interface AuthTokenResponse {
   accessToken: string;
   expiresIn: number;
+  firstLogin: boolean;
   user: UserResponse;
 }
 
