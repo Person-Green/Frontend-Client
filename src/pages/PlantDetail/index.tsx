@@ -35,7 +35,7 @@ declare global {
 }
 
 const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_API_KEY as string;
-const BASE_URL = (import.meta.env.VITE_BASE_URL as string)?.replace(/\/$/, '') || window.location.origin;
+const FRONTEND_URL = (import.meta.env.VITE_FRONTEND_URL as string)?.replace(/\/$/, '') || window.location.origin;
 
 const loadKakaoSDK = (): Promise<void> =>
   new Promise((resolve, reject) => {
@@ -123,7 +123,7 @@ const PlantDetail = () => {
     if (!plant) return;
     try {
       await loadKakaoSDK();
-      const shareUrl = `${BASE_URL}${window.location.pathname}`;
+      const shareUrl = `${FRONTEND_URL}${window.location.pathname}`;
       window.Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
