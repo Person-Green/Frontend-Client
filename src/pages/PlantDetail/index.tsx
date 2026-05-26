@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { getPlantById, addFavorite, removeFavorite } from '../../entities';
 import type {
   PlantCatalogItemResponse,
@@ -79,7 +79,6 @@ const catalogToDetail = (
 
 const PlantDetail = () => {
   const { plantId } = useParams<{ plantId: string }>();
-  const navigate = useNavigate();
   const location = useLocation();
   const goBack = useBackOrHome();
   const passedPlant = (
