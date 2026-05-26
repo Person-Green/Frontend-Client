@@ -16,7 +16,19 @@ declare global {
       isInitialized: () => boolean;
       init: (key: string) => void;
       Share: {
-        sendCustom: (options: { templateId: number; templateArgs?: Record<string, string> }) => void;
+        sendDefault: (options: {
+          objectType: string;
+          content: {
+            title: string;
+            description?: string;
+            imageUrl?: string;
+            link: { mobileWebUrl: string; webUrl: string };
+          };
+          buttons?: Array<{
+            title: string;
+            link: { mobileWebUrl: string; webUrl: string };
+          }>;
+        }) => void;
       };
     };
   }
@@ -110,13 +122,27 @@ const PlantDetail = () => {
     if (!plant) return;
     try {
       await loadKakaoSDK();
-      const shareUrl = "https://www.naver.com/";
-      window.Kakao.Share.sendCustom({
-        templateId: 133611,
-        templateArgs: {
-          shareUrl,
-          img: plant.imageUrl?.trim() || '',
+      const shareUrl = `https://people-green.vercel.app${window.location.pathname}`;
+      window.Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: `${plant.plantKoreanName} (${plant.plantEnglishName})`,
+          description: plant.description || `난이도: ${toDifficultyLabel(plant.manageDifficulty)}`,
+          imageUrl: plant.imageUrl?.trim() || undefined,
+          link: {
+            mobileWebUrl: shareUrl,
+            webUrl: shareUrl,
+          },
         },
+        buttons: [
+          {
+            title: '식물 자세히 보기',
+            link: {
+              mobileWebUrl: shareUrl,
+              webUrl: shareUrl,
+            },
+          },
+        ],
       });
     } catch (e) {
       console.error('카카오 공유 실패', e);
