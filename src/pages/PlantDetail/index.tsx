@@ -110,7 +110,7 @@ const PlantDetail = () => {
     if (!plant) return;
     try {
       await loadKakaoSDK();
-      const shareUrl = window.location.href;
+      const shareUrl = "https://www.naver.com/";
       window.Kakao.Share.sendCustom({
         templateId: 133611,
         templateArgs: {
