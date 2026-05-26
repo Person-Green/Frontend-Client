@@ -16,19 +16,8 @@ declare global {
       isInitialized: () => boolean;
       init: (key: string) => void;
       Share: {
-        sendDefault: (options: {
-          objectType: string;
-          content: {
-            title: string;
-            description?: string;
-            imageUrl?: string;
-            link: { mobileWebUrl: string; webUrl: string };
-          };
-          buttons?: Array<{
-            title: string;
-            link: { mobileWebUrl: string; webUrl: string };
-          }>;
-        }) => void;
+        sendDefault: (options: object) => void;
+        sendCustom: (options: { templateId: number; templateArgs?: Record<string, string> }) => void;
       };
     };
   }
@@ -124,31 +113,17 @@ const PlantDetail = () => {
     try {
       await loadKakaoSDK();
       const shareUrl = `${FRONTEND_URL}${window.location.pathname}`;
-      console.log('VITE_FRONTEND_URL:', import.meta.env.VITE_FRONTEND_URL);
-      console.log('shareUrl:', shareUrl);
-      window.Kakao.Share.sendDefault({
-        objectType: 'feed',
-        content: {
+      window.Kakao.Share.sendCustom({
+        templateId: 133598,
+        templateArgs: {
           title: `${plant.plantKoreanName} (${plant.plantEnglishName})`,
           description: plant.description || `난이도: ${toDifficultyLabel(plant.manageDifficulty)}`,
-          imageUrl: plant.imageUrl?.trim() || undefined,
-          link: {
-            mobileWebUrl: shareUrl,
-            webUrl: shareUrl,
-          },
+          imageUrl: plant.imageUrl?.trim() || '',
+          linkUrl: shareUrl,
         },
-        buttons: [
-          {
-            title: '식물 자세히 보기',
-            link: {
-              mobileWebUrl: shareUrl,
-              webUrl: shareUrl,
-            },
-          },
-        ],
       });
     } catch (e) {
-      console.error('카카오 공유 실패', JSON.stringify(e), e);
+      console.error('카카오 공유 실패', e);
     }
   };
 
