@@ -16,19 +16,8 @@ declare global {
       isInitialized: () => boolean;
       init: (key: string) => void;
       Share: {
-        sendDefault: (options: {
-          objectType: string;
-          content: {
-            title: string;
-            description?: string;
-            imageUrl?: string;
-            link: { mobileWebUrl: string; webUrl: string };
-          };
-          buttons?: Array<{
-            title: string;
-            link: { mobileWebUrl: string; webUrl: string };
-          }>;
-        }) => void;
+        sendDefault: (options: object) => void;
+        sendScrap: (options: { requestUrl: string }) => void;
       };
     };
   }
@@ -124,26 +113,8 @@ const PlantDetail = () => {
     try {
       await loadKakaoSDK();
       const shareUrl = `${BASE_URL}${window.location.pathname}`;
-      window.Kakao.Share.sendDefault({
-        objectType: 'feed',
-        content: {
-          title: `${plant.plantKoreanName} (${plant.plantEnglishName})`,
-          description: plant.description || `난이도: ${toDifficultyLabel(plant.manageDifficulty)}`,
-          imageUrl: plant.imageUrl?.trim() || undefined,
-          link: {
-            mobileWebUrl: shareUrl,
-            webUrl: shareUrl,
-          },
-        },
-        buttons: [
-          {
-            title: '식물 자세히 보기',
-            link: {
-              mobileWebUrl: shareUrl,
-              webUrl: shareUrl,
-            },
-          },
-        ],
+      window.Kakao.Share.sendScrap({
+        requestUrl: shareUrl,
       });
     } catch (e) {
       console.error('카카오 공유 실패', e);
