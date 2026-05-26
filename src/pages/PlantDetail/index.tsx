@@ -23,7 +23,7 @@ declare global {
 }
 
 const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_API_KEY as string;
-const FRONTEND_URL = (import.meta.env.VITE_FRONTEND_URL as string)?.replace(/\/$/, '') || window.location.origin;
+const FRONTEND_URL = 'https://people-green.vercel.app';
 
 const loadKakaoSDK = (): Promise<void> =>
   new Promise((resolve, reject) => {
