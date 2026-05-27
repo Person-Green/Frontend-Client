@@ -78,7 +78,7 @@ const OnboardingPage = ({ onComplete }: OnboardingPageProps) => {
   };
 
   return (
-    <main className={'flex flex-col min-h-screen p-20'}>
+    <main className={'h-dvh flex flex-col p-20'}>
       <div
         className={'flex-1 justify-center flex flex-col items-center gap-20'}
       >
