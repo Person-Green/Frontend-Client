@@ -101,7 +101,12 @@ const FilterSection = ({ config }: FilterSectionProps) => {
               key={option.value}
               selected={value === option.value}
               label={option.label}
-              onClick={() => setDraft(config.key, option.value)}
+              onClick={() =>
+                setDraft(
+                  config.key,
+                  value === option.value ? null : option.value,
+                )
+              }
             />
           ))}
         </div>
