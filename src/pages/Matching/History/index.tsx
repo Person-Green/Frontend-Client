@@ -18,9 +18,11 @@ const MatchingHistory = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const inFlightRef = useRef(false);
 
   const loadMore = useCallback(async () => {
-    if (isLoading || !hasNext) return;
+    if (inFlightRef.current || !hasNext) return;
+    inFlightRef.current = true;
     setIsLoading(true);
     setError(null);
     try {
@@ -28,16 +30,21 @@ const MatchingHistory = () => {
         cursor,
         size: PAGE_SIZE,
       });
-      setItems((prev) => [...prev, ...data.items]);
+      setItems((prev) => {
+        const seen = new Set(prev.map((it) => it.historyId));
+        const fresh = data.items.filter((it) => !seen.has(it.historyId));
+        return [...prev, ...fresh];
+      });
       setCursor(data.nextCursor ?? undefined);
       setHasNext(data.hasNext);
     } catch (e) {
       console.error(e);
       setError('기록을 불러오지 못했습니다.');
     } finally {
+      inFlightRef.current = false;
       setIsLoading(false);
     }
-  }, [cursor, hasNext, isLoading]);
+  }, [cursor, hasNext]);
 
   useEffect(() => {
     void loadMore();
