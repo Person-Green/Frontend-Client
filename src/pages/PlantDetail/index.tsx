@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { getPlantById, addFavorite, removeFavorite } from '../../entities';
 import type {
   PlantCatalogItemResponse,
@@ -8,6 +8,7 @@ import type {
 import Button from '../../shared/ui/button';
 import NonePlantImage from '../../assets/plants/none.svg';
 import { toDifficultyLabel } from '../../shared/lib/plantLabels';
+import { useBackOrHome } from '../../shared/lib/useBackOrHome';
 import Kakao from '../../assets/icon/kakao.svg';
 
 declare global {
@@ -16,26 +17,13 @@ declare global {
       isInitialized: () => boolean;
       init: (key: string) => void;
       Share: {
-        sendDefault: (options: {
-          objectType: string;
-          content: {
-            title: string;
-            description?: string;
-            imageUrl?: string;
-            link: { mobileWebUrl: string; webUrl: string };
-          };
-          buttons?: Array<{
-            title: string;
-            link: { mobileWebUrl: string; webUrl: string };
-          }>;
-        }) => void;
+        sendCustom: (options: { templateId: number; templateArgs?: Record<string, string> }) => void;
       };
     };
   }
 }
 
 const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_API_KEY as string;
-const BASE_URL = (import.meta.env.VITE_BASE_URL as string)?.replace(/\/$/, '') || window.location.origin;
 
 const loadKakaoSDK = (): Promise<void> =>
   new Promise((resolve, reject) => {
@@ -78,8 +66,8 @@ const catalogToDetail = (
 
 const PlantDetail = () => {
   const { plantId } = useParams<{ plantId: string }>();
-  const navigate = useNavigate();
   const location = useLocation();
+  const goBack = useBackOrHome();
   const passedPlant = (
     location.state as { plant?: PlantCatalogItemResponse } | null
   )?.plant;
@@ -123,27 +111,13 @@ const PlantDetail = () => {
     if (!plant) return;
     try {
       await loadKakaoSDK();
-      const shareUrl = `${BASE_URL}${window.location.pathname}`;
-      window.Kakao.Share.sendDefault({
-        objectType: 'feed',
-        content: {
-          title: `${plant.plantKoreanName} (${plant.plantEnglishName})`,
-          description: plant.description || `난이도: ${toDifficultyLabel(plant.manageDifficulty)}`,
-          imageUrl: plant.imageUrl?.trim() || undefined,
-          link: {
-            mobileWebUrl: shareUrl,
-            webUrl: shareUrl,
-          },
+      const shareUrl = `https://people-green.vercel.app/plants/${plantId}`;
+      window.Kakao.Share.sendCustom({
+        templateId: 133611,
+        templateArgs: {
+          shareUrl,
+          img: plant.imageUrl?.trim() || '',
         },
-        buttons: [
-          {
-            title: '식물 자세히 보기',
-            link: {
-              mobileWebUrl: shareUrl,
-              webUrl: shareUrl,
-            },
-          },
-        ],
       });
     } catch (e) {
       console.error('카카오 공유 실패', e);
@@ -162,7 +136,7 @@ const PlantDetail = () => {
     return (
       <main className="flex flex-col items-center justify-center min-h-dvh gap-12">
         <span className="body-s text-text-20">식물 정보를 불러올 수 없어요.</span>
-        <button onClick={() => navigate(-1)} className="label-m text-text-highlight">
+        <button onClick={goBack} className="label-m text-text-highlight">
           돌아가기
         </button>
       </main>
@@ -173,7 +147,7 @@ const PlantDetail = () => {
     <main className="flex flex-col min-h-dvh bg-surface-10">
       {/* 헤더 */}
       <div className="flex items-center px-16 py-8 h-[60px] w-full relative shrink-0">
-        <button onClick={() => navigate(-1)} className="icon-m text-text-30 absolute left-16">
+        <button onClick={goBack} className="icon-m text-text-30 absolute left-16">
           keyboard_arrow_left
         </button>
         <span className="body-m font-bold w-full text-text-20 text-center">식물상세</span>

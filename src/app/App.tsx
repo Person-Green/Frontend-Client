@@ -13,24 +13,66 @@ import MatchingHistory from '../pages/Matching/History';
 import PlantDetail from '../pages/PlantDetail';
 import Encyclopedia from '../pages/Encyclopedia';
 import MyPlants from '../pages/MyPlants';
+import RequireAuth from './RequireAuth';
 
 function App() {
   return (
     <>
       <Routes>
-        <Route element={<Layout />}>
+        <Route
+          element={
+            <RequireAuth>
+              <Layout />
+            </RequireAuth>
+          }
+        >
           <Route path="/" element={<Home />} />
           <Route path="/matching" element={<Matching />} />
           <Route path="/encyclopedia" element={<Encyclopedia />} />
           <Route path="/my-plants" element={<MyPlants />} />
         </Route>
-        <Route path="/plants/:plantId" element={<PlantDetail />} />
+        <Route
+          path="/plants/:plantId"
+          element={
+            <RequireAuth>
+              <PlantDetail />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/matching/survey"
+          element={
+            <RequireAuth>
+              <MatchingSurvey />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/matching/result"
+          element={
+            <RequireAuth>
+              <MatchingResult />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/matching/history"
+          element={
+            <RequireAuth>
+              <MatchingHistory />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/kakao/callback"
+          element={
+            <RequireAuth>
+              <KakaoCallback />
+            </RequireAuth>
+          }
+        />
         <Route path="/auth" element={<AuthFlow />} />
-        <Route path="/matching/survey" element={<MatchingSurvey />} />
-        <Route path="/matching/result" element={<MatchingResult />} />
-        <Route path="/matching/history" element={<MatchingHistory />} />
         <Route path="/auth/google/callback" element={<AuthCallback />} />
-        <Route path="/kakao/callback" element={<KakaoCallback />} />
         <Route path="/auth/enter-name" element={<EnterName />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

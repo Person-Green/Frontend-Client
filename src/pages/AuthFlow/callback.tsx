@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginWithGoogle } from '../../entities';
+import { consumeReturnTo } from '../../app/RequireAuth';
 
 
 const AuthCallback = () => {
@@ -19,12 +20,11 @@ const AuthCallback = () => {
 
     loginWithGoogle({ authorizationCode, state, redirectUri })
       .then((res) => {
-        const hasSetUsername =
-          localStorage.getItem(`hasSetUsername:${res.user.id}`) === 'true';
-        if (!hasSetUsername) {
+        if (res.firstLogin) {
           navigate('/auth/enter-name', { replace: true });
         } else {
-          navigate('/', { replace: true });
+          localStorage.setItem(`hasSetUsername:${res.user.id}`, 'true');
+          navigate(consumeReturnTo(), { replace: true });
         }
       })
       .catch(() => {

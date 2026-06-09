@@ -21,6 +21,7 @@ export interface UserResponse {
 export interface AuthTokenResponse {
   accessToken: string;
   expiresIn: number;
+  firstLogin: boolean;
   user: UserResponse;
 }
 
@@ -97,6 +98,8 @@ export interface PlantRecommendationResponse {
   plantName: string;
   plantEnglishName: string;
   imageUrl: string | null;
+  isFavorite: boolean;
+  favoriteCount: number;
   score: number;
   reasons: string[];
   cautions: string[];

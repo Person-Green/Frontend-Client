@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../shared/ui/button.tsx';
 import { updateUsername } from '../../entities';
+import { consumeReturnTo } from '../../app/RequireAuth';
 
 const EnterName = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const EnterName = () => {
     try {
       const user = await updateUsername({ username: name.trim() });
       localStorage.setItem(`hasSetUsername:${user.id}`, 'true');
-      navigate('/', { replace: true });
+      navigate(consumeReturnTo(), { replace: true });
     } catch (e) {
       console.error('이름 저장 실패', e);
       setError(true);
