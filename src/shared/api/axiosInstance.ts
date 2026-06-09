@@ -1,5 +1,15 @@
 import axios from 'axios';
 
+// refresh 전용 인스턴스 - Authorization 헤더 없이 쿠키만 사용
+const refreshInstance = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+});
+
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 10000,
@@ -65,8 +75,8 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        // POST /auth/token/refresh - refresh_token은 쿠키로 자동 전송
-        const { data } = await axiosInstance.post<{ accessToken: string }>(
+        // refreshInstance 사용: 만료된 accessToken 헤더 없이 쿠키만으로 요청
+        const { data } = await refreshInstance.post<{ accessToken: string }>(
           '/auth/token/refresh',
         );
         const newToken = data.accessToken;
@@ -76,9 +86,9 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        window.location.href = '/auth';
         processQueue(refreshError, null);
         localStorage.removeItem('accessToken');
+        window.location.href = '/auth';
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
